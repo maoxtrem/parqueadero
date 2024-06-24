@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Services\MessagesService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -23,8 +25,11 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
-    {
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        private AuthenticationUtils $authenticationUtils,
+        private MessagesService $messagesService
+    ) {
     }
 
     public function authenticate(Request $request): Passport
@@ -62,8 +67,9 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
             $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
         }
 
-        $url = $this->getLoginUrl($request);
-        return new RedirectResponse($url);
+        // $url = $this->getLoginUrl($request);
+        // return new RedirectResponse($url);
+        return new Response(json_encode(["message" => $this->messagesService->login_fail($this->authenticationUtils->getLastAuthenticationError()->getMessage())]));
     }
 
     protected function getLoginUrl(Request $request): string

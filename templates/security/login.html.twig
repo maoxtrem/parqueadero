@@ -3,7 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
+<form id="form_login">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputUsername">Username</label>
     <input type="text"  name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
@@ -25,3 +25,12 @@
     </button>
 </form>
 {% endblock %}
+  {% block javascripts %}
+            {{ parent()}}
+     {{ encore_entry_script_tags('login') }}
+     <script>
+     const rutes = {
+        login:'{{path('app_login')}}'
+     }
+     </script>
+	{% endblock %}

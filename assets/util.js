@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 /**
  * Easy selector helper function
@@ -24,19 +25,15 @@ export const on = (type, el, listener, all = false) => {
 
 export const fetch_async_formData = async (url, formData = new FormData()) => {
     try {
-        const response = await fetch(url, {
-            method: 'POST',
-            body: formData
-        });
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        console.log(data);
-        return data;
+        const response = await fetch(url, { method: 'POST', body: formData });
+        if (!response.ok) { throw new Error('Error en el servidor code:500'); }
+        return await response.json();
     } catch (error) {
-        console.error('Error fetching data:', error);
-        // Handle error appropriately
+        return { message: { icon: "error", title: "Oops...", text: error.message } };
     }
 }
 
+export const message_server = (message) => {
+    console.log(message)
+    Swal.fire(message)
+}
