@@ -34,6 +34,5 @@ export const fetch_async_formData = async (url, formData = new FormData()) => {
 }
 
 export const message_server = (message) => {
-    console.log(message)
     Swal.fire(message)
 }
