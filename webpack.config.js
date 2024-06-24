@@ -52,7 +52,7 @@ Encore
         config.useBuiltIns = 'usage';
         config.corejs = '3.23';
     })
-
+    .copyFiles({ from: './node_modules/jquery/dist', to: 'jquery/[path][name].[ext]', pattern: /jquery\.min\.js$/ })
     // enables Sass/SCSS support
     //.enableSassLoader()
 
@@ -68,6 +68,6 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
-;
+    ;
 
 module.exports = Encore.getWebpackConfig();
