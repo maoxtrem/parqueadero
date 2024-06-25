@@ -57,6 +57,7 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
+        return new Response(json_encode(["message" => $this->messagesService->login_success()]));
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
     }
 

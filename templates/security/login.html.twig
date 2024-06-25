@@ -3,7 +3,8 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form id="form_login">
+<div>
+<form id="form_login" class="flex-items">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputUsername">Username</label>
     <input type="text"  name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
@@ -24,13 +25,16 @@
         Sign in
     </button>
 </form>
+</div>
+
 {% endblock %}
   {% block javascripts %}
             {{ parent()}}
      {{ encore_entry_script_tags('login') }}
      <script>
      const rutes = {
-        login:'{{path('app_login')}}'
+        login:'{{path('app_login')}}',
+        home:'{{path('app_home')}}',
      }
      </script>
 	{% endblock %}

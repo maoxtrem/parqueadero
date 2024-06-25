@@ -46,11 +46,16 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/register', name: 'app_register')]
-    public function login_register(RequestService $requestService,UserService $userService): JsonResponse
+    public function login_register(
+        RequestService $requestService,
+        UserService $userService
+        ): JsonResponse
     {
         $user = $requestService->getUserForRegister();
         return $userService->registerUser($user);
     }
+
+
 
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void

@@ -5,5 +5,9 @@ on('submit', '#form_login', async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const response = await fetch_async_formData(rutes.login, form)
-    message_server(response.message)
+    message_server(response.message, (e = response.message) => {
+        if (e.icon == 'success') {
+            location.href = rutes.home;
+        }
+    })
 })

@@ -28,7 +28,7 @@ class RequestService
         return  $user;
     }
 
-  
+ 
     private function getRequest(): null|Request
     {
         return $this->requestStack->getCurrentRequest();

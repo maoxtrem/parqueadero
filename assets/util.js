@@ -33,6 +33,10 @@ export const fetch_async_formData = async (url, formData = new FormData()) => {
     }
 }
 
-export const message_server = (message) => {
-    Swal.fire(message)
+export const message_server = (message, action = () => { }) => {
+    Swal.fire(message).then((result) => {
+        if(result.isDismissed){
+            return action();
+        }
+    });
 }
