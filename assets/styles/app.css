@@ -1,4 +1,4 @@
 @import '~bootstrap';
 @import '~sweetalert2/dist/sweetalert2.css';
-
-@import './custom.css'
+@import '~bootstrap-icons';
+@import './custom.css';
