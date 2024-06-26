@@ -1,14 +1,4 @@
 @import '~bootstrap';
 @import '~sweetalert2/dist/sweetalert2.css';
 
-body {
-    display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
-  }
-  .flex-items {
-    order: 0;
-  }
+@import './custom.css'
