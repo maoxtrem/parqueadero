@@ -23,6 +23,14 @@ export const on = (type, el, listener, all = false) => {
     }
 }
 
+  /**
+   * Easy on scroll event listener 
+   */
+  export const onscroll = (el, listener) => {
+    el.addEventListener('scroll', listener)
+  }
+
+
 export const fetch_async_formData = async (url, formData = new FormData()) => {
     try {
         const response = await fetch(url, { method: 'POST', body: formData });
