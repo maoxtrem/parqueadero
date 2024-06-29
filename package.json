@@ -23,6 +23,7 @@
     "dependencies": {
         "bootstrap": "5.3.3",
         "bootstrap-icons": "1.11.3",
+        "bootstrap-table": "1.22.6",
         "jquery": "3.7.1",
         "sweetalert2": "11.12.0"
     }
