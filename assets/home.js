@@ -1,4 +1,5 @@
 import { table_operate, table_id, table_radio, footerCount, footerSuma, table_campo } from "./util";
+
 $('#table_home').bootstrapTable({
     showFooter: true,
     resizable: true,
@@ -26,8 +27,6 @@ $('#table_home').bootstrapTable({
     ],
     data: data_test()
 })
-
-
 
 
 function edit(row) {
