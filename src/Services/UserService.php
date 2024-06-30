@@ -31,13 +31,13 @@ class UserService
             return new JsonResponse(["message" => $this->messagesService->user_exist()]);
         }
         $user = $this->encrytarPassword($user);
-        $this->userRepository->save( $user);
+        $this->userRepository->save($user);
         return new JsonResponse(["message" => $this->messagesService->user_registrated()]);
     }
 
     public function encrytarPassword(User $user): User
     {
-      
+
         $user->setPassword(
             $this->userPasswordHasher->hashPassword(
                 $user,
@@ -45,5 +45,18 @@ class UserService
             )
         );
         return $user;
+    }
+
+
+    public function listAsPagination(PaginationService $pagination): array
+    {
+
+        $rows = $this->userRepository->listAsPagination($pagination);
+        $total = count($this->userRepository->userAll());
+        return  [
+            "rows" => $rows,
+            "total" => $total,
+            "totalNotFiltered" => $total - count($rows)
+        ];
     }
 }

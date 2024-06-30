@@ -13,6 +13,7 @@ class PaginationService
 
     public function __construct()
     {
+
     }
 
     public function getSearch(): ?string
@@ -20,7 +21,7 @@ class PaginationService
         return $this->search;
     }
 
-    public function setSearch($search): ?string
+    public function setSearch( ?string $search): ?string
     {
         return $this->search = $search;
     }
@@ -30,12 +31,12 @@ class PaginationService
         return $this->sort;
     }
 
-    public function setSort($sort): ?string
+    public function setSort( ?string $sort): ?string
     {
         return $this->sort = $sort;
     }
 
-    public function setOrder($order): ?string
+    public function setOrder( ?string $order): ?string
     {
         return $this->order = $order;
     }
@@ -46,7 +47,7 @@ class PaginationService
         return $this->order;
     }
 
-    public function setOffset($offset): ?int
+    public function setOffset(?int $offset): ?int
     {
         return $this->offset = $offset;
     }
@@ -57,7 +58,7 @@ class PaginationService
         return $this->offset;
     }
 
-    public function setLimit($limit): ?int
+    public function setLimit(?int $limit): ?int
     {
         return $this->limit = $limit;
     }

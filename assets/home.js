@@ -5,6 +5,7 @@ $('#table_home').bootstrapTable({
     resizable: true,
     showRefresh: true,
     pagination: true,
+    
     buttonsAlign: "left",
     buttonsPrefix: "btn-sm btn",
     theadClasses: ['table-primary',].join(' '),
