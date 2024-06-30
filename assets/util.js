@@ -23,12 +23,12 @@ export const on = (type, el, listener, all = false) => {
     }
 }
 
-  /**
-   * Easy on scroll event listener 
-   */
-  export const onscroll = (el, listener) => {
+/**
+ * Easy on scroll event listener 
+ */
+export const onscroll = (el, listener) => {
     el.addEventListener('scroll', listener)
-  }
+}
 
 
 export const fetch_async_formData = async (url, formData = new FormData()) => {
@@ -43,8 +43,67 @@ export const fetch_async_formData = async (url, formData = new FormData()) => {
 
 export const message_server = (message, action = () => { }) => {
     Swal.fire(message).then((result) => {
-        if(result.isDismissed){
+        if (result.isDismissed) {
             return action();
         }
     });
+}
+
+
+/**
+ * Action delete and edit bootstrao-table 
+ */
+
+export const operateEvents = (edit, delet) => {
+    return {
+        'click .edit': (e, value, row, index) => {
+            edit(row);
+        },
+        'click .delete': (e, value, row, index) => {
+            delet(row);
+        }
+    }
+}
+
+export const operateFormatter = () => {
+    return [
+        '<a class="edit" href="javascript:void(0)">',
+        '<i class="text-primary bi bi-pencil-square"></i>',
+        '</a>',
+        '<a class="delete" href="javascript:void(0)">',
+        '<i class="text-danger bi bi-trash"></i>',
+        '</a>'
+    ].join('')
+}
+
+export const table_operate = (edit, delet) => {
+    return {
+        field: 'operate',
+        title: 'Accion',
+        align: "center",
+        halign: "center",
+        width: "0.1",
+        widthUnit: "rem",
+        formatter: operateFormatter,
+        events: operateEvents(edit, delet)
+    }
+}
+export const table_id = (formatter = false) => {
+    if (formatter) {
+        return {
+            field: "id",
+            title: "ID",
+            align: "center", width: "0.1", widthUnit: "rem", footerFormatter: footerTotal
+        }
+    }
+    return { field: "id", title: "ID", align: "center", width: "0.1", widthUnit: "rem" }
+}
+export const table_campo = (field, title, footerFormatter = () => { }) => {
+    return { field, title, align: "left", halign: "left", footerFormatter }
+}
+export function table_radio() { return { field: "radio", radio: true } }
+export function footerTotal() { return 'Total' };
+export function footerCount(data) { return data.length };
+export function footerSuma(data) {
+    return data.map(row => row[this.field]).reduce((sum, i) => sum + i, 0)
 }
