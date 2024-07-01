@@ -39,6 +39,7 @@ class RequestService
         $pagination->setOrder($order);
         $pagination->setOffset($offset);
         $pagination->setLimit($limit);
+
         return $pagination;
     }
 

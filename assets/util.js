@@ -93,13 +93,13 @@ export const table_id = (formatter = false) => {
         return {
             field: "id",
             title: "ID",
-            align: "center", width: "0.1", widthUnit: "rem", footerFormatter: footerTotal
+            align: "center", width: "0.1", widthUnit: "rem", sortable: true, footerFormatter: footerTotal
         }
     }
     return { field: "id", title: "ID", align: "center", width: "0.1", widthUnit: "rem" }
 }
 export const table_campo = (field, title, footerFormatter = () => { }) => {
-    return { field, title, align: "left", halign: "left", footerFormatter }
+    return { field, title, align: "left", halign: "left", sortable: true, footerFormatter }
 }
 export function table_radio() { return { field: "radio", radio: true } }
 export function footerTotal() { return 'Total' };

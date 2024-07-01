@@ -6,7 +6,6 @@
 {% block body %}
 
 
-
 	<div class="pagetitle">
 		<h1>Dashboard</h1>
 		<nav>
@@ -21,22 +20,17 @@
 	<!-- End Page Title -->
 	<section class="section dashboard">
 
-   <table id="table_home">
- 
-   </table>
+		<table id="table_home"></table>
 
-    
-    </section>
+
+	</section>
 {% endblock %}
 {% block javascripts %}
 	{{ parent()}}
 	{{ encore_entry_script_tags('home') }}
 	<script>
-		const rutes = {}
-
-
-
-
-
+		const rutes = {
+list_user : "{{ path('app_home_list_users') }}"
+}
 	</script>
 {% endblock %}

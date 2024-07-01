@@ -1,11 +1,16 @@
 import { table_operate, table_id, table_radio, footerCount, footerSuma, table_campo } from "./util";
 
+
+console.log(rutes);
+
 $('#table_home').bootstrapTable({
     showFooter: true,
     resizable: true,
     showRefresh: true,
     pagination: true,
-    
+    sortable:true,
+    sidePagination: "server",
+    url: rutes.list_user,
     buttonsAlign: "left",
     buttonsPrefix: "btn-sm btn",
     theadClasses: ['table-primary',].join(' '),
@@ -15,18 +20,18 @@ $('#table_home').bootstrapTable({
             {
                 align: "center",
                 title: "Lista de:",
-                colspan: 5
+                colspan: 4
+
             }
         ],
         [
             table_radio(),
             table_id(),
-            table_campo("name", "Name"),
-            table_campo("price", "Item Price"),
+            table_campo('username', 'name'),
             table_operate(edit, delet)
+
         ]
-    ],
-    data: data_test()
+    ]
 })
 
 

@@ -52,14 +52,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         
         $builder =  $this->createQueryBuilder('u')
             ->select('u.id,u.username');
-        ($offset && $limit) && $builder->setFirstResult($limit)
+
+        ($offset !== null && $limit !== null) && $builder->setFirstResult($offset)
             ->setMaxResults($limit);
 
-        ($offset && $limit && $sort && $order) && $builder->setFirstResult($limit)
+        ($offset !== null && $limit !== null && $sort !== null && $order !== null) && $builder->setFirstResult($offset)
             ->setMaxResults($limit)
             ->orderBy('u.' . $sort, $order);
 
-        if ($search) {
+        if ($search!==null) {
             $expr = new Expr();
             $orX = $expr->orX();
             foreach (['id','username'] as $field) {
@@ -68,7 +69,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             $builder->andWhere($orX)
                 ->setParameter('search', '%' . $search . '%');
         }
-
+  
         return  $builder->getQuery()
             ->getArrayResult();
     }
