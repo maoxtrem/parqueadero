@@ -1,9 +1,16 @@
 import Swal from 'sweetalert2/dist/sweetalert2.js'
-
+import * as allbootstrap from "bootstrap";
+export const bootstrap = allbootstrap;
 /**
  * Easy selector helper function
  */
 export const select = (el, all = false) => {
+
+
+    if (typeof el === 'object') {
+        return el;
+    }
+
     el = el.trim()
     if (all) {
         return [...document.querySelectorAll(el)]
@@ -96,7 +103,7 @@ export const table_id = (formatter = false) => {
             align: "center", width: "0.1", widthUnit: "rem", sortable: true, footerFormatter: footerTotal
         }
     }
-    return { field: "id", title: "ID", align: "center", width: "0.1", widthUnit: "rem" }
+    return { field: "id", title: "ID", align: "center", width: "0.1", widthUnit: "rem", sortable: true }
 }
 export const table_campo = (field, title, footerFormatter = () => { }) => {
     return { field, title, align: "left", halign: "left", sortable: true, footerFormatter }

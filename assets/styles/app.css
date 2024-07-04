@@ -2,4 +2,5 @@
 @import '~sweetalert2/dist/sweetalert2.css';
 @import '~bootstrap-icons';
 @import './custom.css';
+@import './docs.css';
 @import '~bootstrap-table/dist/bootstrap-table.min.css';

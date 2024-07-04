@@ -10,13 +10,15 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use App\Services\PaginationService;
 use Doctrine\ORM\Query\Expr;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private TokenStorageInterface $tokenStorage)
     {
         parent::__construct($registry, User::class);
     }
@@ -43,13 +45,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function listAsPagination(PaginationService $pag): array
     {
-        
+
         $offset = $pag->getOffset();
         $limit = $pag->getLimit();
         $sort = $pag->getSort();
         $order = $pag->getOrder();
         $search = $pag->getSearch();
-        
+
         $builder =  $this->createQueryBuilder('u')
             ->select('u.id,u.username');
 
@@ -60,16 +62,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setMaxResults($limit)
             ->orderBy('u.' . $sort, $order);
 
-        if ($search!==null) {
+        if ($search !== null) {
             $expr = new Expr();
             $orX = $expr->orX();
-            foreach (['id','username'] as $field) {
+            foreach (['id', 'username'] as $field) {
                 $orX->add($expr->like('u.' . $field, ':search'));
             }
             $builder->andWhere($orX)
                 ->setParameter('search', '%' . $search . '%');
         }
-  
+
+
+        $builder->andWhere('u.id != :user')
+            ->setParameter('user', $this->getUser());
+
         return  $builder->getQuery()
             ->getArrayResult();
     }
@@ -81,5 +87,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->select('u.id');
         return  $builder->getQuery()
             ->getArrayResult();
+    }
+
+    protected function getUser(): ?UserInterface
+    {
+        $token = $this->tokenStorage->getToken();
+        if (null !== $token && $token->getUser() instanceof UserInterface) {
+            return $token->getUser();
+        }
+        return null;
     }
 }

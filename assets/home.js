@@ -1,20 +1,19 @@
-import { table_operate, table_id, table_radio, footerCount, footerSuma, table_campo } from "./util";
+import { table_operate, table_id, table_radio, footerCount, footerSuma, table_campo, bootstrap, on } from "./util";
 
 
-console.log(rutes);
 
 $('#table_home').bootstrapTable({
     showFooter: true,
     resizable: true,
     showRefresh: true,
     pagination: true,
-    sortable:true,
+    sortable: true,
     sidePagination: "server",
     url: rutes.list_user,
     buttonsAlign: "left",
     buttonsPrefix: "btn-sm btn",
-    theadClasses: ['table-primary',].join(' '),
-    classes: ['table', 'table-borderless', 'table-hover', 'table-striped', 'table-sm', 'table-radius'].join(' '),
+    theadClasses: ['table-custom'].join(' '),
+    classes: ['table', 'table-borderless', 'table-hover',  'table-sm', 'table-radius'].join(' '),
     columns: [
         [
             {
@@ -34,24 +33,21 @@ $('#table_home').bootstrapTable({
     ]
 })
 
+const modal = new bootstrap.Modal('#staticBackdrop')
+
+on('shown.bs.modal', modal._element, (e) => {
+    console.log(modal);
+})
 
 function edit(row) {
-    console.debug(row)
+    console.log(row)
+    modal.show();
 }
 
 function delet(row) {
     console.debug(row)
 }
 
-
-function data_test() {
-    return Array.from({ length: 30 }, (_, index) => ({
-        radio: false,
-        id: ++index,
-        name: `Item ${++index}`,
-        price: ++index
-    }));
-};
 
 
 
