@@ -10,6 +10,7 @@ class PaginationService
     private ?string $order;
     private ?int $offset;
     private ?int $limit;
+    private ?int $test;
 
     public function __construct()
     {
