@@ -1,3 +1,4 @@
+
 import { table_operate, table_id, table_radio, footerCount, footerSuma, table_campo, bootstrap, on } from "./util";
 
 

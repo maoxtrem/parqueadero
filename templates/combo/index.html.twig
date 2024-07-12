@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ComboController!
+{% endblock %}
+
+{% block body %}
+<div class="container">
+<input type="number" id="numberInput" placeholder="Enter a number" class="form-control form-control-sm">
+	<button id="checkButton" class="btn btn-sm btn-primary">Check</button>
+	<form id="form-combo" class="form-control">
+		<input type="text" class="form-control">
+		<input type="submit" value="Submit" class="btn btn-primary form-control">
+	</form>
+</div>
+	
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent()}}
+	{{ encore_entry_script_tags('combo') }}
+	<script>
+		const rutes = {}
+	</script>
+
+{% endblock %}

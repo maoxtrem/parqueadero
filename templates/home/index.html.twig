@@ -4,68 +4,68 @@
 {% endblock %}
 
 
-	{% block body %}
-            <div class="bd-toc mt-3 mb-5 my-lg-0 mb-lg-5 px-sm-1 text-body-secondary">
-                <button class="btn btn-sm btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none"
-                    type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false"
-                    aria-controls="tocContents">
-                    Dashboard
-                    <svg class="bi d-md-none ms-2" aria-hidden="true">
-                        <use xlink:href="#chevron-expand"></use>
-                    </svg>
-                </button>
-                <strong class="d-none d-md-block h6 my-2 ms-3">Dashboard</strong>
-                <hr class="d-none d-md-block my-2 ms-3">
-                <div class="collapse bd-toc-collapse" id="tocContents">
-                    <nav id="TableOfContents">
-                        <ul>
-                            <li><a href="#" class="active">Supported content</a>
-                                <ul>
-                                    <li><a href="#">Brand</a>
-                                        <ul>
-                                            <li><a href="#">Text</a></li>
-                                        </ul>
-                                    </li>
-                
-                                </ul>
-                            </li>
+{% block body %}
+	<div class="bd-toc mt-3 mb-5 my-lg-0 mb-lg-5 px-sm-1 text-body-secondary">
+		<button class="btn btn-sm btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+			Dashboard
+			<svg class="bi d-md-none ms-2" aria-hidden="true">
+				<use xlink:href="#chevron-expand"></use>
+			</svg>
+		</button>
+		<strong class="d-none d-md-block h6 my-2 ms-3">Dashboard</strong>
+		<hr class="d-none d-md-block my-2 ms-3">
+		<div class="collapse bd-toc-collapse" id="tocContents">
+			<nav id="TableOfContents">
+				<ul>
+					<li>
+						<a href="#" class="active">Supported content</a>
+						<ul>
+							<li>
+								<a href="#">Brand</a>
+								<ul>
+									<li><a href="#">Text</a></li>
+								</ul>
+							</li>
 
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+						</ul>
+					</li>
 
-		<div class="bd-content ps-lg-2">
-			<table id="table_home"></table>
+				</ul>
+			</nav>
 		</div>
+	</div>
+
+	<div class="bd-content ps-lg-2">
+		<table id="table_home"></table>
+	</div>
 
 
-		<!-- Modal -->
-		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">agregar usuario</h5>
-					</div>
-					<div class="modal-body">
-						<form method="post" accept-charset="UTF-8">
-							<div class="mb-3">
-								<label for="username" class="form-label">username</label>
-								<input type="text" name="username" class="form-control form-control-sm" id="username" required></div>
-							<div class="mb-3">
-								<label for="password" class="form-label">password</label>
-								<input type="password" name="password" class="form-control form-control-sm" id="password" required>
-							</div>
-							<button type="submit" class="btn btn-sm btn-primary">Save Profile</button>
-							<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
-						</form>
-					</div>
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">agregar usuario</h5>
+				</div>
+				<div class="modal-body">
+					<form method="post">
+						<div class="mb-3">
+							<label for="username" class="form-label">username</label>
+							<input type="text" name="username" class="form-control form-control-sm" id="username" autocomplete="username" required>
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">password</label>
+							<input type="password" name="password" class="form-control form-control-sm" id="password" autocomplete="current-password" required>
+						</div>
+						<button type="submit" class="btn btn-sm btn-primary">Save Profile</button>
+						<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+					</form>
 				</div>
 			</div>
 		</div>
+	</div>
 
-	{% endblock %}
-
+{% endblock %}
 
 
 {% block javascripts %}
