@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Entity\Departamento;
+use App\Entity\Pais;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -44,6 +46,15 @@ class RequestService
     }
 
 
+    public function getPais():Pais{
+        $id = $this->get('id')??0;
+        return new Pais($id);
+    }
+
+    public function getDepartamento():Departamento{
+        $id = $this->get('id')??0;
+        return new Departamento($id);
+    }
 
     private function getRequest(): ?Request
     {

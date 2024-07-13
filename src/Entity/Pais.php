@@ -16,6 +16,10 @@ class Pais
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    public function __construct(?int $id = null)
+    {
+        $this->id = $id;
+    }
 
     public function getId(): ?int
     {
@@ -33,7 +37,4 @@ class Pais
 
         return $this;
     }
-
-  
-
 }

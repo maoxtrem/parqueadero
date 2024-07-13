@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Departamento;
 use App\Entity\Municipio;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,28 +17,12 @@ class MunicipioRepository extends ServiceEntityRepository
         parent::__construct($registry, Municipio::class);
     }
 
-    //    /**
-    //     * @return Municipio[] Returns an array of Municipio objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('m.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Municipio
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+  public function findAllByDepartamento(Departamento $departamento) : array {
+    return $this->createQueryBuilder('m')
+    ->select('m.id,m.name')
+    ->andWhere('m.departamento = :departamento')
+    ->setParameter('departamento',$departamento)
+    ->getQuery()->getArrayResult()
+    ;
+  }
 }

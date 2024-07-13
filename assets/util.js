@@ -110,17 +110,6 @@ export const combo = (options, el, defaultValue = 0) => {
         console.error(`Element with id ${el} not found.`);
         return;
     }
-    /*
-        // Genera las opciones como una cadena de HTML
-         const optionsHTML = options.map(option=> {
-            const selected = option.id === defaultValue ? ' selected' : '';
-            return `<option value="${option.id}"${selected}>${option.name}</option>`;
-        }).join('');
-     
-        // Asigna la cadena de HTML al <select>
-       selectElement.innerHTML = optionsHTML; */
-
-
     selectElement.innerHTML = ''
     options.forEach(opt => {
         let option = document.createElement("option");
@@ -136,14 +125,30 @@ export const comboFetch = async (url, el, defaultValue = 0, formData = new FormD
     combo(options, el, defaultValue);
 }
 
-export const comboDependienteFetch = async (url, el, defaultValue = 0, urlDependiente, elDependiente, defaultValueDependiente = 0) => {
-    el = select(el);
-    await comboFetch(url, el, defaultValue);
-    on('change', el, async (e) => {
-        const formData = new FormData();
-        formData.append('id', e.target.value);
-        await comboFetch(urlDependiente, elDependiente, defaultValueDependiente, formData);
-        defaultValueDependiente = 0;
-    })
-    defaultValue > 0 && el.dispatchEvent(new Event('change'));
-}
+export const comboCascade = async (combos) => {
+    // Initialize the first combo box
+    const firstCombo = combos[0];
+    await comboFetch(firstCombo.url, firstCombo.el, firstCombo.defaultValue);
+
+    // Function to create change event listeners for the combo boxes
+    const createChangeListener = (currentCombo, nextCombo) => {
+        on('change', currentCombo.el, async (e) => {
+            const formData = new FormData();
+            formData.append('id', e.target.value);
+            await comboFetch(nextCombo.url, nextCombo.el, nextCombo.defaultValue, formData);
+            // Trigger change event on the next combo box if it has further dependencies
+            const nextComboIndex = combos.indexOf(nextCombo);
+            if (nextComboIndex < combos.length - 1) {
+                select(nextCombo.el).dispatchEvent(new Event('change'));
+            }
+        });
+    };
+
+    // Set up change event listeners for cascading combo boxes
+    for (let i = 0; i < combos.length - 1; i++) {
+        createChangeListener(combos[i], combos[i + 1]);
+    }
+
+    // Trigger change event on the first combo box to start the cascade
+    select(firstCombo.el).dispatchEvent(new Event('change'));
+};
