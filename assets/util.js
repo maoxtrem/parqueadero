@@ -104,37 +104,46 @@ export function footerSuma(data) {
     return data.map(row => row[this.field]).reduce((sum, i) => sum + i, 0)
 }
 
-export const combo = (data, el, optionDefault = 0) => {
+export const combo = (options, el, defaultValue = 0) => {
     const selectElement = select(el);
     if (!selectElement) {
         console.error(`Element with id ${el} not found.`);
         return;
     }
+    /*
+        // Genera las opciones como una cadena de HTML
+         const optionsHTML = options.map(option=> {
+            const selected = option.id === defaultValue ? ' selected' : '';
+            return `<option value="${option.id}"${selected}>${option.name}</option>`;
+        }).join('');
+     
+        // Asigna la cadena de HTML al <select>
+       selectElement.innerHTML = optionsHTML; */
+
+
     selectElement.innerHTML = ''
-    data.unshift({ id: '0', name: 'selecione una opcion' })
-    data.forEach(opt => {
+    options.forEach(opt => {
         let option = document.createElement("option");
         option.value = opt.id;
         option.text = opt.name;
-        option.selected = opt.id == optionDefault;
+        option.selected = opt.id == defaultValue;
         selectElement.add(option);
     });
 }
 
-export const comboFetch = async (url, el, optionDefault = 0, formData = new FormData()) => {
-    const data = await fetch_async_formData(url, formData);
-    combo(data, el, optionDefault);
+export const comboFetch = async (url, el, defaultValue = 0, formData = new FormData()) => {
+    const options = await fetch_async_formData(url, formData);
+    combo(options, el, defaultValue);
 }
 
-export const comboDependienteFetch = async (url, el, optionDefault = 0, urlDependiente, elDependiente, optionDependienteDefault = 0) => {
+export const comboDependienteFetch = async (url, el, defaultValue = 0, urlDependiente, elDependiente, defaultValueDependiente = 0) => {
     el = select(el);
-    await comboFetch(url, el, optionDefault);
-    combo([], elDependiente);
+    await comboFetch(url, el, defaultValue);
     on('change', el, async (e) => {
         const formData = new FormData();
         formData.append('id', e.target.value);
-        await comboFetch(urlDependiente, elDependiente, optionDependienteDefault, formData);
-        optionDependienteDefault = 0;
+        await comboFetch(urlDependiente, elDependiente, defaultValueDependiente, formData);
+        defaultValueDependiente = 0;
     })
-    optionDefault > 0 && el.dispatchEvent(new Event('change'));
+    defaultValue > 0 && el.dispatchEvent(new Event('change'));
 }
