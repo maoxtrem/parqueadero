@@ -20,12 +20,16 @@ class ComboController extends AbstractController
     #[Route('/combo/pais', name: 'app_combo_pais')]
     public function pais(): JsonResponse
     {
-        return new JsonResponse([
-            ['id' => 1, 'name' => 'colombia'],
-            ['id' => 2, 'name' => 'peru'],
-            ['id' => 3, 'name' => 'venezuela'],
-            ['id' => 4, 'name' => 'panama']
-        ]);
+
+        $array = [];
+
+        for ($i = 1; $i < 32; $i++) {
+            array_push($array, ['id' => $i, 'name' => 'item_' . $i]);
+        }
+
+
+
+        return new JsonResponse($array);
     }
     #[Route('/combo/depto', name: 'app_combo_depto')]
     public function depto(RequestService $request): JsonResponse
@@ -34,10 +38,11 @@ class ComboController extends AbstractController
 
 
         if ($id == 1) {
-            return new JsonResponse([
-                ['id' => 1, 'name' => 'barranca'],
-                ['id' => 2, 'name' => 'bogota']
-            ]);
+            $array = [];
+            for ($i = 1; $i < 100; $i++) {
+                array_push($array, ['id' => $i, 'name' => 'item_' . $i]);
+            }
+            return new JsonResponse($array);
         }
 
         if ($id == 2) {
