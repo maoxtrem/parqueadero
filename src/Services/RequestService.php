@@ -51,7 +51,7 @@ class RequestService
     }
 
 
-    private function get(string $key): ?string
+    public function get(string $key): ?string
     {
         $request = $this->getRequest();
         if ($request instanceof Request) {

@@ -114,3 +114,38 @@ export function footerCount(data) { return data.length };
 export function footerSuma(data) {
     return data.map(row => row[this.field]).reduce((sum, i) => sum + i, 0)
 }
+
+export const combo = (data, el, optionDefault = 0) => {
+    const selectElement = select(el);
+    if (!selectElement) {
+        console.error(`Element with id ${el} not found.`);
+        return;
+    }
+    selectElement.innerHTML = ''
+    data.unshift({ id: '0', name: 'selecione una opcion' })
+    data.forEach(opt => {
+        let option = document.createElement("option");
+        option.value = opt.id;
+        option.text = opt.name;
+        option.selected = opt.id == optionDefault;
+        selectElement.add(option);
+    });
+}
+
+export const comboFetch = async (url, el, optionDefault = 0, formData = new FormData()) => {
+    const data = await fetch_async_formData(url, formData);
+    combo(data, el, optionDefault);
+}
+
+export const comboDependienteFetch = async (url, el, optionDefault = 0, urlDependiente, elDependiente, optionDependienteDefault = 0) => {
+    el = select(el);
+    await comboFetch(url, el, optionDefault);
+    combo([], elDependiente);
+    on('change', el, async (e) => {
+        const formData = new FormData();
+        formData.append('id', e.target.value);
+        await comboFetch(urlDependiente, elDependiente, optionDependienteDefault, formData);
+        optionDependienteDefault = 0;
+    })
+    optionDefault > 0 && el.dispatchEvent(new Event('change'));
+}
