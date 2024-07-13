@@ -5,29 +5,18 @@ export const bootstrap = allbootstrap;
  * Easy selector helper function
  */
 export const select = (el, all = false) => {
-
-
     if (typeof el === 'object') {
         return el;
     }
-
     el = el.trim()
-    if (all) {
-        return [...document.querySelectorAll(el)]
-    } else {
-        return document.querySelector(el)
-    }
+    return all ? [...document.querySelectorAll(el)] : document.querySelector(el);
 }
 
 /**
  * Easy event listener function
  */
 export const on = (type, el, listener, all = false) => {
-    if (all) {
-        select(el, all).forEach(e => e.addEventListener(type, listener))
-    } else {
-        select(el, all).addEventListener(type, listener)
-    }
+    all ? select(el, all).forEach(e => e.addEventListener(type, listener)) : select(el, all).addEventListener(type, listener);
 }
 
 /**
