@@ -1,20 +1,60 @@
 // main.js
 
-import { combo, comboCascade } from './util';
-
+import Chart from 'chart.js/auto';
+import * as echarts from 'echarts';
+import { select } from './util'
 
 document.addEventListener('DOMContentLoaded', async () => {
-  //  toastr.error('Please enter a number.', 'Error');
-  const combos = [
-    { el: '#pais', url: rutes.pais, defaultValue: 1},
-    { el: '#departamento', url: rutes.departamento, defaultValue: 0},
-    { el: '#municipio', url: rutes.municipio, defaultValue: 0 },
+ const chartDom = select('#chart2');
+  let myChart = echarts.init(chartDom);
+  const option = {
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: [150, 230, 224, 218, 135, 147, 260],
+        type: 'line'
+      },
+      {
+        data: [150, 230, 224, 218, 135, 147, 260],
+        type: 'bar'
+      }
+    ]
+  };
 
-  ];
-  await comboCascade(combos);
-  combo([
-    {id:0,name:'seleccione un campo'},
-    {id:1,name:'Hombre'},
-    {id:2,name:'Mujer'},
-  ],'#sexo')
+  myChart.setOption(option); 
+
+
+
+
+  const ctx = select('#chart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }, {
+        label: '# of Votes',
+        data: [19, 194, 34, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
 });
