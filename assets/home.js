@@ -1,3 +1,4 @@
+
 import { table_operate, table_id, table_radio, footerCount, footerSuma, table_campo, bootstrap, on } from "./util";
 
 
@@ -36,16 +37,14 @@ $('#table_home').bootstrapTable({
 const modal = new bootstrap.Modal('#staticBackdrop')
 
 on('shown.bs.modal', modal._element, (e) => {
-    console.log(modal);
+   
 })
 
 function edit(row) {
-    console.log(row)
     modal.show();
 }
 
 function delet(row) {
-    console.debug(row)
 }
 
 

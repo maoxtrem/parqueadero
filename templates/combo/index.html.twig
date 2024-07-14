@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ComboController!
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<form id="form-combo" class="form-control">
+			<select name="pais" id="pais" class="form-select"></select>
+			<select name="departamento" id="departamento" class="form-select">></select>
+			<select name="municipio" id="municipio" class="form-select">></select>
+				<select name="sexo" id="sexo" class="form-select">></select>
+			<input type="submit" value="enviar">
+		</form>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent()}}
+	{{ encore_entry_script_tags('combo') }}
+	<script>
+		const rutes = {
+pais : '{{ path('app_combo_pais') }}',
+departamento : '{{ path('app_combo_departamento') }}',
+municipio : '{{ path('app_combo_municipio') }}'
+}
+	</script>
+
+{% endblock %}

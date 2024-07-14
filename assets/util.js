@@ -5,29 +5,18 @@ export const bootstrap = allbootstrap;
  * Easy selector helper function
  */
 export const select = (el, all = false) => {
-
-
     if (typeof el === 'object') {
         return el;
     }
-
     el = el.trim()
-    if (all) {
-        return [...document.querySelectorAll(el)]
-    } else {
-        return document.querySelector(el)
-    }
+    return all ? [...document.querySelectorAll(el)] : document.querySelector(el);
 }
 
 /**
  * Easy event listener function
  */
 export const on = (type, el, listener, all = false) => {
-    if (all) {
-        select(el, all).forEach(e => e.addEventListener(type, listener))
-    } else {
-        select(el, all).addEventListener(type, listener)
-    }
+    all ? select(el, all).forEach(e => e.addEventListener(type, listener)) : select(el, all).addEventListener(type, listener);
 }
 
 /**
@@ -114,3 +103,52 @@ export function footerCount(data) { return data.length };
 export function footerSuma(data) {
     return data.map(row => row[this.field]).reduce((sum, i) => sum + i, 0)
 }
+
+export const combo = (options, el, defaultValue = 0) => {
+    const selectElement = select(el);
+    if (!selectElement) {
+        console.error(`Element with id ${el} not found.`);
+        return;
+    }
+    selectElement.innerHTML = ''
+    options.forEach(opt => {
+        let option = document.createElement("option");
+        option.value = opt.id;
+        option.text = opt.name;
+        option.selected = opt.id == defaultValue;
+        selectElement.add(option);
+    });
+}
+
+export const comboFetch = async (url, el, defaultValue = 0, formData = new FormData()) => {
+    const options = await fetch_async_formData(url, formData);
+    combo(options, el, defaultValue);
+}
+
+export const comboCascade = async (combos) => {
+    // Initialize the first combo box
+    const firstCombo = combos[0];
+    await comboFetch(firstCombo.url, firstCombo.el, firstCombo.defaultValue);
+
+    // Function to create change event listeners for the combo boxes
+    const createChangeListener = (currentCombo, nextCombo) => {
+        on('change', currentCombo.el, async (e) => {
+            const formData = new FormData();
+            formData.append('id', e.target.value);
+            await comboFetch(nextCombo.url, nextCombo.el, nextCombo.defaultValue, formData);
+            // Trigger change event on the next combo box if it has further dependencies
+            const nextComboIndex = combos.indexOf(nextCombo);
+            if (nextComboIndex < combos.length - 1) {
+                select(nextCombo.el).dispatchEvent(new Event('change'));
+            }
+        });
+    };
+
+    // Set up change event listeners for cascading combo boxes
+    for (let i = 0; i < combos.length - 1; i++) {
+        createChangeListener(combos[i], combos[i + 1]);
+    }
+
+    // Trigger change event on the first combo box to start the cascade
+    select(firstCombo.el).dispatchEvent(new Event('change'));
+};

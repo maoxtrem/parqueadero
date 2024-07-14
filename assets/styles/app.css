@@ -4,3 +4,4 @@
 @import './custom.css';
 @import './docs.css';
 @import '~bootstrap-table/dist/bootstrap-table.min.css';
+@import '~toastr/build/toastr.min.css';
