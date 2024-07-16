@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ComboController!
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+
+
+		<div class="row">
+			<form action="{{path('app_update')}}" method="post" enctype="multipart/form-data">
+				<input type="file" name="image">
+				<button type="submit">Upload</button>
+			</form>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent()}}
+	{{ encore_entry_script_tags('combo') }}
+	<script>
+		const rutes = {};
+	</script>
+
+{% endblock %}

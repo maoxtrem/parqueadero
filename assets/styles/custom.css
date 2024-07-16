@@ -1,0 +1,35 @@
+
+/*--------------------------------------------------------------
+# table
+--------------------------------------------------------------*/
+.table-radius{
+  border-collapse: collapse; /* Para asegurar que los bordes colapsen correctamente */
+  border-radius: 5px; /* Radio de borde para la tabla */
+  overflow: hidden; /* Para ocultar cualquier contenido que se salga del radio */
+}
+
+
+.table-custom tr:nth-child(1){
+ --bs-table-bg: var(--bs-dark);
+ --bs-table-color:var(--bs-white);
+}
+.table-custom tr:nth-child(2){
+  --bs-table-bg: var(--bs-white);
+ }
+
+table tbody {
+  font-size: small;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+table thead {
+  font-size: large;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.pagination{
+  --bs-pagination-padding-x: 0.5rem;
+  --bs-pagination-padding-y: 0.25rem;
+  --bs-pagination-font-size: 0.875rem;
+  --bs-pagination-border-radius: var(--bs-border-radius-sm);
+}
