@@ -127,12 +127,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->foto;
     }
 
+
+
     #[ORM\PreUpdate]
     #[ORM\PrePersist]
-    public function setFoto(?string $foto): static
+    public function setFoto(): static
     {
         $file = $this->getFotoFile();
-        $this->foto = $file instanceof UploadedFile ? uniqid() . '-' . uniqid() . '.' . $file->guessExtension() : $foto;
+        $this->foto = $file instanceof UploadedFile && uniqid() . '-' . uniqid() . '.' . $file->guessExtension();
         return $this;
     }
 
