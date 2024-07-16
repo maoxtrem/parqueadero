@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entity\User;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UpladFilesService
 {
@@ -16,12 +17,8 @@ class UpladFilesService
 
     public function uploadFileUser(User $user)
     {
-        $user->getFotoFile()->move(
-            $this->uploadsDirectory,
-            $user->getFoto()
-        );
+        $this->uploadFile($user->getFotoFile(), $user->getFoto());
     }
-
 
     public function delete(?string $filename)
     {
@@ -29,5 +26,13 @@ class UpladFilesService
             $filePath = $this->uploadsDirectory . '/' . $filename;
             file_exists($filePath) && unlink($filePath);
         }
+    }
+
+    private function uploadFile(UploadedFile $file, string $name)
+    {
+        $$file->move(
+            $this->uploadsDirectory,
+            $name
+        );
     }
 }
