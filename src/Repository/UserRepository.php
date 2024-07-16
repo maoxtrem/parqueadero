@@ -9,17 +9,22 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use App\Services\PaginationService;
+use App\Services\UpladFilesService;
 use Doctrine\ORM\Query\Expr;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @extends ServiceEntityRepository<User>
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry, private TokenStorageInterface $tokenStorage)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        private TokenStorageInterface $tokenStorage,
+        private UpladFilesService $upladFilesService 
+    ) {
         parent::__construct($registry, User::class);
     }
 
@@ -29,11 +34,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function save(User $user): void
     {
+        $file = $user->getFotoFile();
+        if ($file instanceof UploadedFile) {
+            $this->upladFilesService->delete($user->getFoto());
+            $this->upladFilesService->uploadFileUser($user);
+        }
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
 
-    
+
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof User) {

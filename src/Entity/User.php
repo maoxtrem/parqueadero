@@ -6,9 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -30,6 +33,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $foto = null;
+
+
+    private ?UploadedFile $fotoFile = null;
+
+
+    public function __construct(?int $id = null)
+    {
+        $this->id = $id;
+    }
+
 
     public function getId(): ?int
     {
@@ -104,5 +120,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+
+
+    #[ORM\PreUpdate]
+    #[ORM\PrePersist]
+    public function setFoto(): static
+    {
+        $file = $this->getFotoFile();
+        $this->foto = $file instanceof UploadedFile && uniqid() . '-' . uniqid() . '.' . $file->guessExtension();
+        return $this;
+    }
+
+    public function getFotoFile(): ?UploadedFile
+    {
+        return $this->fotoFile;
+    }
+
+    public function setFotoFile(?UploadedFile $file): static
+    {
+        $this->fotoFile = $file;
+
+        return $this;
     }
 }

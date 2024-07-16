@@ -152,3 +152,15 @@ export const comboCascade = async (combos) => {
     // Trigger change event on the first combo box to start the cascade
     select(firstCombo.el).dispatchEvent(new Event('change'));
 };
+
+export const multiCombos = async (combos) => {
+    combos.forEach(async combo => {
+        await comboFetch(combo.url, combo.el, combo.defaultValue);
+        if (typeof combo.listener === 'function') {
+            on('change', combo.el, (e) => {
+                combo.listener(e);
+            });
+        }
+    })
+
+};
