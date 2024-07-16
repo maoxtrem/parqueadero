@@ -2,6 +2,7 @@
 
 import Chart from 'chart.js/auto';
 import * as echarts from 'echarts';
+import * as d3 from 'd3'
 import { select } from './util'
 
 document.addEventListener('DOMContentLoaded', async () => {

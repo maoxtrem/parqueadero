@@ -20,7 +20,7 @@ entries.forEach(e => {
 
 Encore
     .setOutputPath('public/build/')
-    .setPublicPath('/build')
+    .setPublicPath('/build')  
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()

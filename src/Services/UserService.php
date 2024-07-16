@@ -18,6 +18,7 @@ class UserService
     }
     public function registerUser(User $user): JsonResponse
     {
+
         if ($user->getUsername() == null) {
             return new JsonResponse(["message" => $this->messagesService->username_empty()]);
         }
@@ -31,6 +32,15 @@ class UserService
             return new JsonResponse(["message" => $this->messagesService->user_exist()]);
         }
         $user = $this->encrytarPassword($user);
+        $this->userRepository->save($user);
+        return new JsonResponse(["message" => $this->messagesService->user_registrated()]);
+    }
+
+    public function userUpdate(User $user): JsonResponse
+    {
+        $file = $user->getFotoFile();
+        $user = $this->userRepository->findOneBy(['id' => $user]);
+        $user->setFotoFile($file);
         $this->userRepository->save($user);
         return new JsonResponse(["message" => $this->messagesService->user_registrated()]);
     }

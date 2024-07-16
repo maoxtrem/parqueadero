@@ -6,6 +6,7 @@ use App\Entity\Departamento;
 use App\Entity\Pais;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestService
@@ -24,6 +25,14 @@ class RequestService
         $user->setUsername($username);
         $user->setPassword($password);
         $user->setRoles(['ROLE_USER']);
+        return  $user;
+    }
+
+    public function getUserForUpdate(): User
+    {
+        $user = new User(1);
+        $file = $this->get('image');
+        $user->setFotoFile($file);
         return  $user;
     }
 
@@ -46,13 +55,15 @@ class RequestService
     }
 
 
-    public function getPais():Pais{
-        $id = $this->get('id')??0;
+    public function getPais(): Pais
+    {
+        $id = $this->get('id') ?? 0;
         return new Pais($id);
     }
 
-    public function getDepartamento():Departamento{
-        $id = $this->get('id')??0;
+    public function getDepartamento(): Departamento
+    {
+        $id = $this->get('id') ?? 0;
         return new Departamento($id);
     }
 
@@ -62,19 +73,28 @@ class RequestService
     }
 
 
-    public function get(string $key): ?string
+    public function get(string $key): null|string|UploadedFile
     {
         $request = $this->getRequest();
         if ($request instanceof Request) {
-            $value = $request->getPayload()->getString($key);
-            if ($value  != '') {
-                return $value;
+
+            $file = $request->files->get($key);
+            if ($file) {
+                return $file;
             }
-            $value = $request->query->get($key);
-            if ($value  != '') {
-                return $value;
+            $post = $request->getPayload()->getString($key);
+            if ($post  != '') {
+                return $post;
+            }
+            $get = $request->query->get($key);
+            if ($get  != '') {
+                return $get;
             }
         }
         return null;
     }
+
+
+
+
 }

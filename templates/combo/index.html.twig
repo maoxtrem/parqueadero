@@ -7,9 +7,12 @@
 	<div class="container">
 
 
-		<div class="row"></div>
-		<canvas id="chart" class="col-12"></canvas>
-		<div id="chart2" class="col-12"  style=""></div>
+		<div class="row">
+			<form action="{{path('app_update')}}" method="post" enctype="multipart/form-data">
+				<input type="file" name="image">
+				<button type="submit">Upload</button>
+			</form>
+		</div>
 	</div>
 
 {% endblock %}
