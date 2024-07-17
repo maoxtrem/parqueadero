@@ -37,7 +37,7 @@ class UpladFilesService
 
     private function uploadFilePublic(UploadedFile $file, string $name)
     {
-        $$file->move(
+        $file->move(
             $this->uploadsDirectoryPublic,
             $name
         );
@@ -46,7 +46,7 @@ class UpladFilesService
 
     private function uploadFilePrivate(UploadedFile $file, string $name)
     {
-        $$file->move(
+        $file->move(
             $this->uploadsDirectoryPrivate,
             $name
         );

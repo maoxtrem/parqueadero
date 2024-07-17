@@ -9,5 +9,7 @@
 
 import "bootstrap";
 import "bootstrap-table";
+import 'jquery-ui/ui/widgets/datepicker'; // Ejemplo de un widget específico
+import 'jquery-ui/ui/widgets/autocomplete'; // Ejemplo de un widget específico
 import './styles/app.css';
 import "./main"

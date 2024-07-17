@@ -1,6 +1,9 @@
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import * as allbootstrap from "bootstrap";
 export const bootstrap = allbootstrap;
+import jquery from 'jquery';
+export const $$ = jquery;
+const cache = new Map();
 /**
  * Easy selector helper function
  */
@@ -27,11 +30,19 @@ export const onscroll = (el, listener) => {
 }
 
 
-export const fetch_async_formData = async (url, formData = new FormData()) => {
+export const fetch_async_formData = async (url, formData = new FormData(), isCache = false) => {
+    const cacheKey = `${url}-${formData ? JSON.stringify([...formData]) : ''}`;
+    if (isCache) {
+        if (cache.has(cacheKey)) {
+            return cache.get(cacheKey);
+        }
+    }
     try {
         const response = await fetch(url, { method: 'POST', body: formData });
         if (!response.ok) { throw new Error('Error en el servidor code:500'); }
-        return await response.json();
+        const data = await response.json();
+        isCache && cache.set(cacheKey, data);
+        return data;
     } catch (error) {
         return { message: { icon: "error", title: "Oops...", text: error.message } };
     }
@@ -121,9 +132,10 @@ export const combo = (options, el, defaultValue = 0) => {
 }
 
 export const comboFetch = async (url, el, defaultValue = 0, formData = new FormData()) => {
-    const options = await fetch_async_formData(url, formData);
+    const options = await fetch_async_formData(url, formData, true);
     combo(options, el, defaultValue);
 }
+
 
 export const comboCascade = async (combos) => {
     // Initialize the first combo box

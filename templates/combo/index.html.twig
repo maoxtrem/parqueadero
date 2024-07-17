@@ -4,16 +4,33 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
+	<div class="container mb-5">
 
 
-		<div class="row">
+		<div class="row mb-4">
 			<form action="{{path('app_update')}}" method="post" enctype="multipart/form-data">
 				<input type="file" name="image">
+				<input type="text" id="datepicker">
 				<button type="submit">Upload</button>
 			</form>
 		</div>
+		<div class="row mb-4">
+			<div class="ui-widget">
+				<label for="birds">Birds:
+				</label>
+				<input id="birds" size="50">
+			</div>
+
+		</div>
+		<div class="row mb-4">
+			<form>
+				<select id="pais" name="pais"></select>
+				<select id="departamento" name="departamento"></select>
+				<select id="municipio" name="municipio"></select>
+			</form>
+		</div>
 	</div>
+
 
 {% endblock %}
 
@@ -21,7 +38,11 @@
 	{{ parent()}}
 	{{ encore_entry_script_tags('combo') }}
 	<script>
-		const rutes = {};
+		const rutes = {
+pais:"{{ path('app_combo_pais') }}",
+departamento:"{{ path('app_combo_departamento') }}",
+municipio:"{{ path('app_combo_municipio') }}"
+};
 	</script>
 
 {% endblock %}
