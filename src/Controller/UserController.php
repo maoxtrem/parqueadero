@@ -9,10 +9,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Services\RequestService;
 use App\Services\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
+#[Route(path: '/register', name: 'app_')]
 class UserController extends AbstractController
 {
     
-    #[Route(path: '/register/form', name: 'app_register_form')]
+    #[Route(path: '/register', name: 'register_form')]
     public function login_register_form(): Response
     {
         if ($this->getUser() instanceof UserInterface) {
@@ -22,7 +23,7 @@ class UserController extends AbstractController
         return $this->render('security/register.html.twig');
     }
 
-    #[Route(path: '/register', name: 'app_register')]
+    #[Route(path: '/user_register', name: 'register')]
     public function login_register(
         RequestService $requestService,
         UserService $userService
@@ -32,7 +33,7 @@ class UserController extends AbstractController
         return $userService->registerUser($user);
     }
 
-    #[Route(path: '/update', name: 'app_update')]
+    #[Route(path: '/user_update', name: 'user_update')]
     public function update(
         RequestService $requestService,
         UserService $userService

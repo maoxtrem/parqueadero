@@ -7,7 +7,7 @@
 import { $$, comboCascade } from './util';
 document.addEventListener('DOMContentLoaded', async () => {
 
-  $$("#datepicker").datepicker();
+
   const birdData = [
     { "label": "Eagle", "id": 1 },
     { "label": "Sparrow", "id": 2 },

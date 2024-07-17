@@ -4,31 +4,19 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container mb-5">
-
-
+	<div class="container ">
 		<div class="row mb-4">
-			<form action="{{path('app_update')}}" method="post" enctype="multipart/form-data">
-				<input type="file" name="image">
-				<input type="text" id="datepicker">
-				<button type="submit">Upload</button>
+			<form action="{{path('app_user_update')}}" method="post" enctype="multipart/form-data">
+				<input class="form-control mb-1" type="file" name="image">
+				<input class="form-control mb-1" type="date" id="datepicker">
+				<input class="form-control mb-1" type="text" id="birds" size="50">
+				<select class="form-control mb-1"  id="pais" name="pais"></select>
+				<select class="form-control mb-1"  id="departamento" name="departamento"></select>
+				<select class="form-control mb-1"  id="municipio" name="municipio"></select>
+				<button class="btn btn-primary mb-1"  type="submit">submir</button>
 			</form>
 		</div>
-		<div class="row mb-4">
-			<div class="ui-widget">
-				<label for="birds">Birds:
-				</label>
-				<input id="birds" size="50">
-			</div>
 
-		</div>
-		<div class="row mb-4">
-			<form>
-				<select id="pais" name="pais"></select>
-				<select id="departamento" name="departamento"></select>
-				<select id="municipio" name="municipio"></select>
-			</form>
-		</div>
 	</div>
 
 

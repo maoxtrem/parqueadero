@@ -9,21 +9,21 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
+#[Route(path: '/login_user', name: 'app_')]
 class SecurityController extends AbstractController
 {
 
 
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/login_user', name: 'login')]
     public function login(AuthenticationUtils $authenticationUtils): RedirectResponse|JsonResponse
     {
         if ($authenticationUtils->getLastAuthenticationError() == null) {
-            return $this->redirectToRoute('app_login_form');
+            return $this->redirectToRoute('login_form');
         }
     }
 
 
-    #[Route(path: '/login/form', name: 'app_login_form')]
+    #[Route(path: '/login', name: 'login_form')]
     public function login_form(): Response
     {
         if ($this->getUser() instanceof UserInterface) {
@@ -35,7 +35,7 @@ class SecurityController extends AbstractController
 
 
 
-    #[Route(path: '/logout', name: 'app_logout')]
+    #[Route(path: '/logout', name: 'logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');

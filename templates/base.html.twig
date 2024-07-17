@@ -111,7 +111,7 @@
 							<i class="bi bi-three-dots"></i>
 						</button>
 					</div>
-					<a class="navbar-brand" href="#">Cerrar sesion</a>
+					<a class="navbar-brand" href="{{path('app_logout')}}">Cerrar sesion</a>
 				</nav>
 			</header>
 
@@ -137,7 +137,10 @@
 
 										<ul class="list-unstyled fw-normal pb-2 small">
 											<li>
-												<a href="#" class="bd-links-link d-inline-block rounded">Introduction</a>
+												<a href="{{path('app_home')}}" class="bd-links-link d-inline-block rounded">Inicio</a>
+											</li>
+											<li>
+												<a href="{{path('app_combo_index')}}" class="bd-links-link d-inline-block rounded">Combos</a>
 											</li>
 										</ul>
 									</li>
