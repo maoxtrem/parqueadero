@@ -43,6 +43,7 @@ security:
             #- { path: /register/form, roles: IS_AUTHENTICATED_ANONYMOUSLY }
             #- { path: /login/form, roles: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: /home, roles: IS_AUTHENTICATED_FULLY }
+            - { path: /combo, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

@@ -12,10 +12,9 @@ use App\Services\RequestService;
 #[Route('/combo', name: 'app_combo_')]
 class ComboController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('', name: 'index')]
     public function index(): Response
     {
-
         return $this->render('combo/index.html.twig');
     }
 
