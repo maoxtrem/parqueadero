@@ -36,7 +36,7 @@
 	</div>
 
 	<div class="bd-content ps-lg-2">
-		<table id="table_home"></table>
+		<table id="table_paises"></table>
 	</div>
 
 
@@ -65,12 +65,15 @@
 		</div>
 	</div>
 
+
+
 {% endblock %}
 
 
 {% block javascripts %}
 	{{ parent()}}
 	{{ encore_entry_script_tags('home') }}
+		{{ encore_entry_link_tags('test') }}
 	<script>
 		const rutes = {
 list_user: "{{ path('app_home_list_users') }}"

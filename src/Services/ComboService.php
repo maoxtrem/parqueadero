@@ -15,8 +15,7 @@ class ComboService
         private PaisRepository $paisRepository,
         private DepartamentoRepository $departamentoRepository,
         private MunicipioRepository $municipioRepository
-        )
-    {
+    ) {
     }
 
     public function getPaises(): array
@@ -24,6 +23,19 @@ class ComboService
         $paises = $this->paisRepository->findAll();
         return $this->unshift($paises);
     }
+
+
+    public function get_list_crud_pais(): array
+    {
+        return  $this->paisRepository->list_crud();
+    }
+
+    public function crud_pais(): array
+    {
+        return [];
+    }
+
+
 
     public function getDepartamentos(Pais $pais): array
     {
@@ -42,4 +54,6 @@ class ComboService
         array_unshift($array, ['id' => 0, 'name' => 'selecionar un campo']);
         return $array;
     }
+
+    /**crud de combos */
 }

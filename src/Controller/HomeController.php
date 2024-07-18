@@ -10,10 +10,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-
+#[Route('/', name: 'app_home_')]
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
+    #[Route('home', name: 'index')]
     public function home(): Response
     {
         $this->getUser();
@@ -21,7 +21,7 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
-    #[Route('/home/list/user', name: 'app_home_list_users')]
+    #[Route('users', name: 'list_users')]
     public function list(RequestService $requestService, UserService $userService): JsonResponse
     {
         $pagination = $requestService->getPagination();
@@ -32,6 +32,6 @@ class HomeController extends AbstractController
     public function index(): Response
     {
       
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_home_index');
     }
 }

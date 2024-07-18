@@ -1,34 +1,68 @@
-// main.js
+import { bootstrap, on, fetch_async_formData, confirmar, formatt_campo, configBootstrapTableDefault } from "./util";
 
 
-// assets/js/app.js
+$('#table_paises').bootstrapTable({
+  ...configBootstrapTableDefault,
+  url: rutes.list_paises,
+  buttons: add_pais,
+  columns: [
+    [{ align: "center", title: "Lista de: paises", colspan: 5 }],
+    [
+      formatt_campo(),
+      formatt_campo({ type: 'text', name: 'nombre' }),
+      ...formatt_campo({ type: 'relation', name: 'test' },false,true),
+      formatt_campo({ type: 'operate', name: '', events: { edit: editPais, delet: deletPais } })
+    ]
+  ]
+})
+
+const modal = new bootstrap.Modal('#modalPaises')
+
+on('shown.bs.modal', modal._element, (e) => {
+  console.log('show');
+})
+
+on('hidden.bs.modal', modal._element, (e) => {
+  console.log('hide');
+})
+
+function editPais(row) {
+  modal.show();
+}
+
+async function deletPais(row) {
+  let formData = new FormData();
+  formData.append('delete', true);
+  formData.append('id', row.id);
+  confirmar(action);
+  async function action() {
+    await fetch_async_formData(rutes.crud_pais, formData)
+    $('#table_paises').bootstrapTable('refresh')
+  }
+
+}
+
+function add_pais() {
+  return {
+    btnAdd: {
+      text: 'nuevo pais',
+      icon: 'bi bi-plus-square',
+      event: () => {
+        modal.show();
+      },
+      attributes: {
+        title: 'nuevo pais',
+        class: 'btn-success'
+      }
+    }
+  }
+}
 
 
-import { $$, comboCascade } from './util';
+
 document.addEventListener('DOMContentLoaded', async () => {
 
 
-  const birdData = [
-    { "label": "Eagle", "id": 1 },
-    { "label": "Sparrow", "id": 2 },
-    { "label": "Pigeon", "id": 3 },
-    { "label": "Parrot", "id": 4 },
-    { "label": "Owl", "id": 5 }
-  ];
 
-
-  $$("#birds").autocomplete({
-    minLength: 2,
-    source: birdData,
-    select: function (event, ui) {
-      console.log(ui.item.value);
-    }
-  });
-
-  await comboCascade([
-    { url: rutes.pais, el: "#pais", defaultValue: 0 },
-    { url: rutes.departamento, el: "#departamento", defaultValue: 0 },
-    { url: rutes.municipio, el: "#municipio", defaultValue: 0 },
-  ])
 
 });

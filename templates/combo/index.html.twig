@@ -4,21 +4,48 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container ">
-		<div class="row mb-4">
-			<form action="{{path('app_user_update')}}" method="post" enctype="multipart/form-data">
-				<input class="form-control mb-1" type="file" name="image">
-				<input class="form-control mb-1" type="date" id="datepicker">
-				<input class="form-control mb-1" type="text" id="birds" size="50">
-				<select class="form-control mb-1"  id="pais" name="pais"></select>
-				<select class="form-control mb-1"  id="departamento" name="departamento"></select>
-				<select class="form-control mb-1"  id="municipio" name="municipio"></select>
-				<button class="btn btn-primary mb-1"  type="submit">submir</button>
-			</form>
+	<div class="bd-toc mt-3 mb-5 my-lg-0 mb-lg-5 px-sm-1 text-body-secondary">
+		<button class="btn btn-sm btn-link p-md-0 mb-2 mb-md-0 text-decoration-none bd-toc-toggle d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#tocContents" aria-expanded="false" aria-controls="tocContents">
+			Combos
+			<svg class="bi d-md-none ms-2" aria-hidden="true">
+				<use xlink:href="#chevron-expand"></use>
+			</svg>
+		</button>
+		<strong class="d-none d-md-block h6 my-2 ms-3">lista combos</strong>
+		<hr class="d-none d-md-block my-2 ms-3">
+		<div class="collapse bd-toc-collapse" id="tocContents">
+			<nav id="TableOfContents" class="ps-5">
+				<ul>
+					<li><a href="#table_paises" class="active">paises</a></li>
+				</ul>
+			</nav>
 		</div>
-
 	</div>
 
+	<div
+		class="bd-content ps-lg-2">
+		<!-- Table form paises -->
+		<table id="table_paises"></table>
+		<!-- Modal form paises -->
+		<div class="modal fade" id="modalPaises" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalPaisesLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalPaisesLabel">paises</h5>
+					</div>
+					<div class="modal-body">
+						<form id="form_paises">
+							<div class="mb-3">
+								<input type="text" name="pais" class="form-control form-control-sm" id="pais" required placeholder="nombre del pais">
+							</div>
+							<button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+							<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}
 
@@ -27,9 +54,8 @@
 	{{ encore_entry_script_tags('combo') }}
 	<script>
 		const rutes = {
-pais:"{{ path('app_combo_pais') }}",
-departamento:"{{ path('app_combo_departamento') }}",
-municipio:"{{ path('app_combo_municipio') }}"
+list_paises:'{{ path('app_combo_list_crud_pais') }}',
+crud_pais:'{{ path('app_combo_crud_pais') }}'
 };
 	</script>
 

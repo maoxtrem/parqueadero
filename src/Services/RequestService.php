@@ -61,6 +61,16 @@ class RequestService
         return new Pais($id);
     }
 
+    public function getPaisCrud() : Pais {
+        $id = $this->get('id') ?? 0;
+        return new Pais($id);
+    }
+
+
+
+
+
+
     public function getDepartamento(): Departamento
     {
         $id = $this->get('id') ?? 0;

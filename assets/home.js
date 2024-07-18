@@ -16,7 +16,7 @@ $('#table_home').bootstrapTable({
     theadClasses: ['table-custom'].join(' '),
     classes: ['table', 'table-borderless', 'table-hover', 'table-sm', 'table-radius'].join(' '),
     columns: [
-        [
+      /*   [
             {
                 align: "center",
                 title: "Lista de:",
@@ -30,7 +30,7 @@ $('#table_home').bootstrapTable({
             table_campo('username', 'name'),
             table_operate(edit, delet)
 
-        ]
+        ] */
     ]
 })
 

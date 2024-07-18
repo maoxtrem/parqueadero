@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\PaisRepository;
+use App\Trait\EntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PaisRepository::class)]
 class Pais
 {
+    use EntityTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -15,6 +18,8 @@ class Pais
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+
+
 
     public function __construct(?int $id = null)
     {

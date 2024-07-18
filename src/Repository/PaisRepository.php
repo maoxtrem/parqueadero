@@ -23,4 +23,11 @@ class PaisRepository extends ServiceEntityRepository
             ->getQuery()
             ->getArrayResult();
     }
+    public function list_crud(): array
+    {
+        return  $this->createQueryBuilder('p')
+            ->select('p.id,p.name name_nombre')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

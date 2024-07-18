@@ -56,6 +56,21 @@ export const message_server = (message, action = () => { }) => {
     });
 }
 
+export const confirmar = (action = () => { }) => {
+    Swal.fire({
+        title: "Quieres hacer esto?",
+        text: "Esta accion es irevercible!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            return action();
+        }
+    });
+}
 
 /**
  * Action delete and edit bootstrao-table 
@@ -71,6 +86,9 @@ export const operateEvents = (edit, delet) => {
         }
     }
 }
+/**
+ * Action botones bootstrao-table 
+ */
 
 export const operateFormatter = () => {
     return [
@@ -82,38 +100,112 @@ export const operateFormatter = () => {
         '</a>'
     ].join('')
 }
-
-export const table_operate = (edit, delet) => {
-    return {
-        field: 'operate',
-        title: 'Accion',
-        align: "center",
-        halign: "center",
-        width: "0.1",
-        widthUnit: "rem",
-        formatter: operateFormatter,
-        events: operateEvents(edit, delet)
-    }
-}
-export const table_id = (formatter = false) => {
-    if (formatter) {
-        return {
-            field: "id",
-            title: "ID",
-            align: "center", width: "0.1", widthUnit: "rem", sortable: true, footerFormatter: footerTotal
-        }
-    }
-    return { field: "id", title: "ID", align: "center", width: "0.1", widthUnit: "rem", sortable: true }
-}
-export const table_campo = (field, title, footerFormatter = () => { }) => {
-    return { field, title, align: "left", halign: "left", sortable: true, footerFormatter }
-}
-export function table_radio() { return { field: "radio", radio: true } }
+/**
+ * footer de bootstrao-table 
+ */
 export function footerTotal() { return 'Total' };
 export function footerCount(data) { return data.length };
-export function footerSuma(data) {
-    return data.map(row => row[this.field]).reduce((sum, i) => sum + i, 0)
+export function footerSuma(data) { return data.map(row => row[this.field]).reduce((sum, i) => sum + i, 0) }
+export function footerPromedio(data) { return data.map(row => (+row[this.field]).reduce((sum, i) => sum + i, 0) / data.length).toFixed(1); }
+/**
+ * formato de los campos de bootstrao-table 
+ */
+export const formatt_campo = (data = { type: 'id', name: 'id', events: { edit: () => { }, delet: () => { } } }, total = false, debug = false) => {
+    let campos = {}
+    const { type, name } = data;
+    const width = { width: "0.1", widthUnit: "rem" };
+    const aling_valing = { align: 'center', valign: 'middle' };
+    const atrib_basic = { title: name.replace(/_/g, ' ').toUpperCase(), sortable: true, ...aling_valing };
+    switch (type) {
+        case 'id':
+            return {
+                field: name,
+                ...atrib_basic,
+                ...width,
+                ...total ? { footerFormatter: footerTotal } : {}
+            }
+        case 'text':
+            campos = {
+                title: atrib_basic.title,
+                field: 'name_' + name,
+                align: "left",
+                halign: "left",
+                sortable: atrib_basic.sortable
+            }
+            debug && (campos.title = 'name_' + name);
+            return campos
+        case 'operate':
+            const { edit, delet } = data.events;
+            return {
+                title: 'ACCION',
+                field: 'operate',
+                align: "center",
+                halign: "center",
+                ...width,
+                clickToSelect: false,
+                formatter: operateFormatter,
+                events: operateEvents(edit, delet)
+            }
+        case 'radio':
+            return { field: "radio", radio: true }
+        case 'state':
+            return { field: 'state', checkbox: true, ...aling_valing }
+        case 'relation':
+            let campo1 = {
+                title: atrib_basic.title,
+                field: 'name_' + name,
+                align: "left",
+                halign: "left",
+                sortable: atrib_basic.sortable
+            }
+            debug && (campo1.title = 'name_' + name);
+
+            let campo2 = {
+                field: 'id_' + name,
+                visible: debug
+            }
+            debug && (campo2.title = 'id_' + name);
+            return [ campo1, campo2 ];
+        case 'totalTextFormatter':
+        case 'totalCountFormatter':
+        case 'totalSumaFormatter':
+        case 'totalPromedioFormatter':
+            let formatter = { footerFormatter: footerTotal };
+            (data.type === 'totalCountFormatter') && (formatter.footerFormatter = footerCount);
+            (data.type === 'totalSumaFormatter') && (formatter.footerFormatter = footerSuma);
+            (data.type === 'totalPromedioFormatter') && (formatter.footerFormatter = footerPromedio);
+            campos = {
+                field: 'name_' + name,
+                title: atrib_basic.title,
+                sortable: atrib_basic.sortable,
+                ...aling_valing,
+                ...formatter
+            }
+            debug && (campos.title = 'name_' + name);
+            return campos;
+    }
 }
+
+/**
+ * preconficuracion de la tabla de bootstrao-table 
+ */
+
+export const configBootstrapTableDefault = {
+    showFooter: true,
+    resizable: true,
+    showRefresh: true,
+    pagination: true,
+    sortable: true,
+    buttonsAlign: "left",
+    buttonsPrefix: "btn-sm btn",
+    theadClasses: ['table-custom'].join(' '),
+    classes: ['table', 'table-borderless', 'table-hover', 'table-sm', 'table-radius'].join(' ')
+}
+
+
+/**
+ * combo dependiente
+ */
 
 export const combo = (options, el, defaultValue = 0) => {
     const selectElement = select(el);

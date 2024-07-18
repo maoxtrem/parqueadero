@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
     public function login_form(): Response
     {
         if ($this->getUser() instanceof UserInterface) {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('home_index');
         }
 
         return $this->render('security/login.html.twig');
