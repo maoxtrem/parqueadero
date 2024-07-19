@@ -46,16 +46,14 @@ class ComboController extends AbstractController
     public function crud_list_pais(ComboService $comboService): JsonResponse
     {
         $paises = $comboService->get_list_crud_pais();
-        return new JsonResponse($paises); 
-   
+        return new JsonResponse($paises);
     }
 
     #[Route('/crud_pais', name: 'crud_pais')]
     public function crud_pais(RequestService $request, ComboService $comboService): JsonResponse
     {
-       $pais = $request->getPaisCrud();
+        $pais = $request->getPaisCrud();
+        $comboService->crud_pais($pais);
         return new JsonResponse([]);
     }
-
-
 }

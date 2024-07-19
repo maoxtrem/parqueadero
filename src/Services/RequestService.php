@@ -61,9 +61,15 @@ class RequestService
         return new Pais($id);
     }
 
-    public function getPaisCrud() : Pais {
+    public function getPaisCrud(): Pais
+    {
         $id = $this->get('id') ?? 0;
-        return new Pais($id);
+        $name = $this->get('name');
+        $delete = $this->get('delete');
+        $pais = new Pais($id);
+        $pais->setDelete($delete);
+        !$pais->isDelete() && $pais->setName($name);
+        return $pais;
     }
 
 
@@ -103,5 +109,4 @@ class RequestService
         }
         return null;
     }
-
 }

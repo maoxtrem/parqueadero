@@ -30,8 +30,28 @@ class ComboService
         return  $this->paisRepository->list_crud();
     }
 
-    public function crud_pais(): array
+    public function crud_pais(Pais $pais): array
     {
+        if ($pais->isDelete()) {
+            $entity = $this->paisRepository->findOneBy(['id' => $pais->getId()]);
+            if ($entity instanceof Pais) {
+                $entity->delete();
+                $this->paisRepository->save($entity);
+                return [];
+            }
+        }
+
+        if ($pais->isUpdate()) {
+            $entity = $this->paisRepository->findOneBy(['id' => $pais->getId()]);
+            if ($entity instanceof Pais) {
+                $entity->setName($pais->getName());
+                $this->paisRepository->save($entity);
+                return [];
+            }
+        }
+
+        $pais->isCreate() &&  $this->paisRepository->save($pais);
+
         return [];
     }
 

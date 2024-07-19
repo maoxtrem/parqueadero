@@ -21,6 +21,7 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
     #[Route('users', name: 'list_users')]
     public function list(RequestService $requestService, UserService $userService): JsonResponse
     {
@@ -28,10 +29,10 @@ class HomeController extends AbstractController
         $users = $userService->listAsPagination($pagination);
         return new JsonResponse($users);
     }
+
     #[Route('', name: 'app_index')]
     public function index(): Response
-    {
-      
+    {   
         return $this->redirectToRoute('app_home_index');
     }
 }

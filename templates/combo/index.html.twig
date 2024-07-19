@@ -36,7 +36,8 @@
 					<div class="modal-body">
 						<form id="form_paises">
 							<div class="mb-3">
-								<input type="text" name="pais" class="form-control form-control-sm" id="pais" required placeholder="nombre del pais">
+								<input type="hidden" name="id" id="id_pais" value="0">
+								<input type="text" name="name" class="form-control form-control-sm" id="pais" required placeholder="nombre del pais">
 							</div>
 							<button type="submit" class="btn btn-sm btn-primary">Guardar</button>
 							<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -47,6 +48,12 @@
 		</div>
 	</div>
 
+
+	<form>
+		<select class="form-control" id="pais_select"></select>
+		<select class="form-control" id="departamento_select"></select>
+		<select class="form-control" id="municipio_select"></select>
+	</form>
 {% endblock %}
 
 {% block javascripts %}

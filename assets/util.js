@@ -119,7 +119,7 @@ export const formatt_campo = (data = { type: 'id', name: 'id', events: { edit: (
     switch (type) {
         case 'id':
             return {
-                field: name,
+                field: name, 
                 ...atrib_basic,
                 ...width,
                 ...total ? { footerFormatter: footerTotal } : {}
@@ -152,20 +152,15 @@ export const formatt_campo = (data = { type: 'id', name: 'id', events: { edit: (
             return { field: 'state', checkbox: true, ...aling_valing }
         case 'relation':
             let campo1 = {
-                title: atrib_basic.title,
-                field: 'name_' + name,
+                title: atrib_basic.title, field: 'name_' + name,
                 align: "left",
                 halign: "left",
                 sortable: atrib_basic.sortable
             }
             debug && (campo1.title = 'name_' + name);
-
-            let campo2 = {
-                field: 'id_' + name,
-                visible: debug
-            }
+            let campo2 = { field: 'id_' + name, visible: debug }
             debug && (campo2.title = 'id_' + name);
-            return [ campo1, campo2 ];
+            return [campo1, campo2];
         case 'totalTextFormatter':
         case 'totalCountFormatter':
         case 'totalSumaFormatter':
@@ -207,13 +202,14 @@ export const configBootstrapTableDefault = {
  * combo dependiente
  */
 
-export const combo = (options, el, defaultValue = 0) => {
+export const combo =  (options, el, defaultValue = 0) => {
     const selectElement = select(el);
     if (!selectElement) {
         console.error(`Element with id ${el} not found.`);
         return;
     }
     selectElement.innerHTML = ''
+ 
     options.forEach(opt => {
         let option = document.createElement("option");
         option.value = opt.id;
