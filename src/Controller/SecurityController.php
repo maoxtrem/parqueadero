@@ -29,7 +29,7 @@ class SecurityController extends AbstractController
     {
 
         if ($this->getUser() instanceof UserInterface) {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home_index');
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -50,7 +50,7 @@ class SecurityController extends AbstractController
         UserPasswordHasherInterface $passwordHasher,
     ): Response {
         if ($this->getUser() instanceof UserInterface) {
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home_index');
         }
 
         $csrfToken = $requestService->get('_csrf_token');
