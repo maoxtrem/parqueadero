@@ -8,25 +8,60 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use App\Security\CustomAuthenticator;
 
 class RequestService
 {
 
 
-    public function __construct(private RequestStack $requestStack)
-    {
+    public function __construct(
+        private RequestStack $requestStack,
+        private UserAuthenticatorInterface $userAuthenticator,
+        private CustomAuthenticator $authenticator
+    ) {
     }
 
-    public function getUserForRegister(): User
+    private function getRequest(): ?Request
     {
-        $user = new User;
-        $username = $this->get('username');
-        $password = $this->get('password');
+        return $this->requestStack->getCurrentRequest();
+    }
+
+
+
+
+
+
+
+    public function getUserRegister(): User
+    {
+        $user = new User();
+        $username = $this->get('_username');
+        $password = $this->get('_password');
         $user->setUsername($username);
         $user->setPassword($password);
         $user->setRoles(['ROLE_USER']);
         return  $user;
     }
+
+    public function isMethodPost(): bool
+    {
+        return $this->getRequest()->isMethod('POST');
+    }
+
+
+    public function login(User $user): void
+    {
+
+      $this->userAuthenticator->authenticateUser(
+            $user,
+            $this->authenticator,
+            $this->getRequest()
+        );
+       
+    }
+
+
 
     public function getUserForUpdate(): User
     {
@@ -61,15 +96,26 @@ class RequestService
         return new Pais($id);
     }
 
+    public function getPaisCrud(): Pais
+    {
+        $id = $this->get('id') ?? 0;
+        $name = $this->get('name');
+        $delete = $this->get('delete');
+        $pais = new Pais($id);
+        $pais->setDelete($delete);
+        !$pais->isDelete() && $pais->setName($name);
+        return $pais;
+    }
+
+
+
+
+
+
     public function getDepartamento(): Departamento
     {
         $id = $this->get('id') ?? 0;
         return new Departamento($id);
-    }
-
-    private function getRequest(): ?Request
-    {
-        return $this->requestStack->getCurrentRequest();
     }
 
 
@@ -93,5 +139,4 @@ class RequestService
         }
         return null;
     }
-
 }

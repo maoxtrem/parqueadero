@@ -1,5 +1,5 @@
 
-import { table_operate, table_id, table_radio, footerCount, footerSuma, table_campo, bootstrap, on } from "./util";
+import { table_operate, table_id, table_radio, table_campo, bootstrap, on} from "./util";
 
 
 
@@ -14,9 +14,9 @@ $('#table_home').bootstrapTable({
     buttonsAlign: "left",
     buttonsPrefix: "btn-sm btn",
     theadClasses: ['table-custom'].join(' '),
-    classes: ['table', 'table-borderless', 'table-hover',  'table-sm', 'table-radius'].join(' '),
+    classes: ['table', 'table-borderless', 'table-hover', 'table-sm', 'table-radius'].join(' '),
     columns: [
-        [
+      /*   [
             {
                 align: "center",
                 title: "Lista de:",
@@ -30,14 +30,14 @@ $('#table_home').bootstrapTable({
             table_campo('username', 'name'),
             table_operate(edit, delet)
 
-        ]
+        ] */
     ]
 })
 
 const modal = new bootstrap.Modal('#staticBackdrop')
 
 on('shown.bs.modal', modal._element, (e) => {
-   
+
 })
 
 function edit(row) {

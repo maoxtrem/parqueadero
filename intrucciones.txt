@@ -1,0 +1,7 @@
+composer create-project symfony/skeleton ./ "6.4.*"
+composer require symfony/maker-bundle --dev
+composer require twig
+composer require orm //x
+composer require symfony/profile-pack --dev
+composer require security
+php bin/console make:security:form-login
