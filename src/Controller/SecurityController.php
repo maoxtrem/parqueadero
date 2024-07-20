@@ -92,7 +92,7 @@ class SecurityController extends AbstractController
                 }
                
                 $requestService->login($user);
-                return $this->redirectToRoute('app_home');
+                return $this->redirectToRoute('app_home_index');
             }
         }
 
