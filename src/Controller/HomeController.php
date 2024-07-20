@@ -16,10 +16,8 @@ class HomeController extends AbstractController
     #[Route('home', name: 'index')]
     public function home(): Response
     {
-        $this->getUser();
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+ 
+        return $this->render('home.html.twig');
     }
 
     #[Route('users', name: 'list_users')]
@@ -30,9 +28,4 @@ class HomeController extends AbstractController
         return new JsonResponse($users);
     }
 
-    #[Route('', name: 'app_index')]
-    public function index(): Response
-    {   
-        return $this->redirectToRoute('app_home_index');
-    }
 }

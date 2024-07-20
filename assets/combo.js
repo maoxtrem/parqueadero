@@ -84,15 +84,6 @@ function add_pais() {
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-  await comboCascade([
-    { url: '/combo/pais', el: "#pais_select", defaultValue: 0},
-    { url: '/combo/departamento', el: "#departamento_select", defaultValue: 0},
-    { url: '/combo/municipio', el: "#municipio_select", defaultValue:0}
-  ])
+
 
 });
-
-const evento = (e) => {
-  console.log('cambio este impur');
-}
-

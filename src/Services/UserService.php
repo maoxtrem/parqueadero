@@ -2,71 +2,29 @@
 
 namespace App\Services;
 
+
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserService
 {
-
-    public function __construct(
-        private MessagesService $messagesService,
-        private UserRepository $userRepository,
-        private UserPasswordHasherInterface $userPasswordHasher
-    ) {
-    }
-    public function registerUser(User $user): JsonResponse
+    public function __construct(private UserRepository $userRepository,private UserPasswordHasherInterface $passwordHasher)
     {
-
-        if ($user->getUsername() == null) {
-            return new JsonResponse(["message" => $this->messagesService->username_empty()]);
-        }
-        if ($user->getPassword() == null) {
-            return new JsonResponse(["message" => $this->messagesService->password_empty()]);
-        }
-
-        $userdb =  $this->userRepository->findOneBy(['username' => $user->getUsername()]);
-
-        if ($userdb  instanceof User) {
-            return new JsonResponse(["message" => $this->messagesService->user_exist()]);
-        }
-        $user = $this->encrytarPassword($user);
-        $this->userRepository->save($user);
-        return new JsonResponse(["message" => $this->messagesService->user_registrated()]);
     }
-
-    public function userUpdate(User $user): JsonResponse
+    public function getUser(User $user): ?User
     {
-        $file = $user->getFotoFile();
-        $user = $this->userRepository->findOneBy(['id' => $user]);
-        $user->setFotoFile($file);
-        $this->userRepository->save($user);
-        return new JsonResponse(["message" => $this->messagesService->user_registrated()]);
+        return $this->userRepository->findOneBy(['username'=>$user->getUsername()]);
     }
-
-    public function encrytarPassword(User $user): User
+    public function register(User $user): User
     {
-
         $user->setPassword(
-            $this->userPasswordHasher->hashPassword(
+            $this->passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()
             )
         );
-        return $user;
-    }
-
-
-    public function listAsPagination(PaginationService $pagination): array
-    {
-
-        $rows = $this->userRepository->listAsPagination($pagination);
-        $total = count($this->userRepository->userAll());
-        return  [
-            "rows" => $rows,
-            "total" => $total,
-            "totalNotFiltered" => $total - count($rows)
-        ];
+        return $this->userRepository->save($user);
     }
 }

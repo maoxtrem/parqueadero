@@ -15,7 +15,7 @@ class ComboController extends AbstractController
     #[Route('', name: 'index')]
     public function index(): Response
     {
-        return $this->render('combo/index.html.twig');
+        return $this->render('combo.html.twig');
     }
 
     #[Route('/pais', name: 'paises')]

@@ -8,8 +8,6 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 
 const entries = [
     'app',
-    'login',
-    'register',
     'home',
     'combo'
 ];
