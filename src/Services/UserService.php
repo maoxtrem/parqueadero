@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-
+use App\ClassRequest\RequestPagination;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -27,5 +27,17 @@ class UserService
             )
         );
         return $this->userRepository->save($user);
+    }
+
+    public function listAsPagination(RequestPagination $pagination): array
+    {
+
+        $rows = $this->userRepository->listAsPagination($pagination);
+        $total = count($this->userRepository->userAll());
+        return  [
+            "rows" => $rows,
+            "total" => $total,
+            "totalNotFiltered" => $total - count($rows)
+        ];
     }
 }

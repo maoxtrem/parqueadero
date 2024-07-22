@@ -1,38 +1,22 @@
 
-import { table_operate, table_id, table_radio, table_campo, bootstrap, on} from "./util";
+import { configBootstrapTableDefault, formatt_campo,bootstrap, on} from "./util";
 
 
-
-$('#table_home').bootstrapTable({
-    showFooter: true,
-    resizable: true,
-    showRefresh: true,
-    pagination: true,
-    sortable: true,
-    sidePagination: "server",
+const encabezado_paises = [
+    formatt_campo(),
+    formatt_campo({ type: 'radio',name: '' }),
+    formatt_campo({ type: 'text', name: 'username' }),
+    formatt_campo({ type: 'operate', name: '', events: { edit: edit, delet: delet } })
+  ];
+  const title_paises = [{ align: "center", title: "Lista de: usuarios", colspan: encabezado_paises.length }];
+  
+  $('#table_paises').bootstrapTable({
+    ...configBootstrapTableDefault,
+    columns: [title_paises, encabezado_paises],
     url: rutes.list_user,
-    buttonsAlign: "left",
-    buttonsPrefix: "btn-sm btn",
-    theadClasses: ['table-custom'].join(' '),
-    classes: ['table', 'table-borderless', 'table-hover', 'table-sm', 'table-radius'].join(' '),
-    columns: [
-      /*   [
-            {
-                align: "center",
-                title: "Lista de:",
-                colspan: 4
+    sidePagination: "server"
+  })
 
-            }
-        ],
-        [
-            table_radio(),
-            table_id(),
-            table_campo('username', 'name'),
-            table_operate(edit, delet)
-
-        ] */
-    ]
-})
 
 const modal = new bootstrap.Modal('#staticBackdrop')
 
