@@ -16,14 +16,42 @@ class DepartamentoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Departamento::class);
     }
+    public function save(Departamento $entity,$flush = true): void
+    {
+        $this->getEntityManager()->persist($entity);
+        $flush && $this->getEntityManager()->flush();
+    }
 
+    public function remove(Departamento $entity,$flush = true): void
+    {
+        $this->getEntityManager()->remove($entity);
+        $flush && $this->getEntityManager()->flush();
+    }
 
-    public function findAllByPais(Pais $pais): array
+    public function active_or_inactive(Departamento $entity,$flush = true): void
+    {
+        $entity->active();
+        $this->getEntityManager()->persist($entity);
+        $flush && $this->getEntityManager()->flush();
+    }
+
+    public function get_format_combo_select(Pais $pais): array
     {
         return  $this->createQueryBuilder('d')
             ->select('d.id,d.name')
             ->andWhere('d.pais = :pais')
-            ->setParameter('pais',$pais)
+            ->setParameter('pais', $pais)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    public function list_crud(): array
+    {
+        return  $this->createQueryBuilder('d')
+            ->select('d.id, d.name name_departamento, p.id id_pais, p.name name_pais')
+            ->leftJoin('d.pais', 'p')
+            ->andWhere('d.status = true')
+            ->andWhere('p.status = true')
             ->getQuery()
             ->getArrayResult();
     }

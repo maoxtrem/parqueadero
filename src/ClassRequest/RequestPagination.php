@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\ClassRequest;
 
-class PaginationService
+class RequestPagination
 {
 
     private ?string $search;

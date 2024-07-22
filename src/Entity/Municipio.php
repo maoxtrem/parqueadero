@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use App\Repository\MunicipioRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use App\Trait\EntityTrait;
 #[ORM\Entity(repositoryClass: MunicipioRepository::class)]
 class Municipio
 {
+    use EntityTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

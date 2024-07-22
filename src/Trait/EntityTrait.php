@@ -2,38 +2,57 @@
 
 namespace App\Trait;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 trait EntityTrait
 {
     #[ORM\Column]
-    private ?bool $delet = false;
+    private ?bool $status = true;
 
-    public function isDelete(): ?bool
+    #[ORM\Column(type: "datetime_immutable")]
+    private ?DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: "datetime_immutable")]
+    private ?DateTimeImmutable $updatedAt = null;
+
+
+    public function isActive(): ?bool
     {
-        return $this->delet;
+        return $this->status;
     }
 
-    public function setDelete(bool $delete): static
+
+    public function active(): static
     {
-        $this->delet = $delete;
+        $this->status = !$this->status;
         return $this;
     }
 
-    public function delete(): static
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
     {
-        $this->delet = true;
-        return $this;
+  
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new DateTimeImmutable();
     }
 
 
-    public function isUpdate(): bool
+    public function getCreatedAt(): ?DateTimeImmutable
     {
-        return $this->id > 0;
+        return $this->createdAt;
     }
 
-    public function isCreate(): bool
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
-        return !$this->isUpdate();
+        return $this->updatedAt;
     }
+
+
 }

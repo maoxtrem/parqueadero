@@ -17,7 +17,26 @@ class MunicipioRepository extends ServiceEntityRepository
         parent::__construct($registry, Municipio::class);
     }
 
-  public function findAllByDepartamento(Departamento $departamento) : array {
+    public function save(Municipio $entity,$flush = true): void
+    {
+        $this->getEntityManager()->persist($entity);
+        $flush && $this->getEntityManager()->flush();
+    }
+
+    public function remove(Municipio $entity,$flush = true): void
+    {
+        $this->getEntityManager()->remove($entity);
+        $flush && $this->getEntityManager()->flush();
+    }
+
+    public function active_or_inactive(Municipio $entity,$flush = true): void
+    {
+        $entity->active();
+        $this->getEntityManager()->persist($entity);
+        $flush && $this->getEntityManager()->flush();
+    }
+
+  public function get_format_combo_select(Departamento $departamento) : array {
     return $this->createQueryBuilder('m')
     ->select('m.id,m.name')
     ->andWhere('m.departamento = :departamento')

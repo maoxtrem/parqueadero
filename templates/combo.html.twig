@@ -17,6 +17,7 @@
 			<nav id="TableOfContents" class="ps-5">
 				<ul>
 					<li><a href="#table_paises" class="active">paises</a></li>
+					<li><a href="#table_departamento">Departamento</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -46,6 +47,29 @@
 				</div>
 			</div>
 		</div>
+		<!-- Table form departamentos -->
+		<table id="table_departamento"></table>
+		<!-- Modal form departamentos -->
+		<div class="modal fade" id="modalDepartamento" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalDepartamentoLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalDepartamentoLabel">Departamentos</h5>
+					</div>
+					<div class="modal-body">
+						<form id="form_departamento">
+							<div class="mb-3">
+								<input type="hidden" name="id" id="id_departamento" value="0">
+								<input type="text" name="name" class="form-control form-control-sm mb-1" id="departamento" required placeholder="nombre del departamento">
+								<select id="select_pais" name="id_pais" class="form-control form-control-sm"></select>
+							</div>
+							<button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+							<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 {% endblock %}
@@ -55,8 +79,11 @@
 	{{ encore_entry_script_tags('combo') }}
 	<script>
 		const rutes = {
+list_combo_paises:'{{ path('app_combo_paises') }}',
 list_paises:'{{ path('app_combo_list_crud_pais') }}',
-crud_pais:'{{ path('app_combo_crud_pais') }}'
+crud_pais:'{{ path('app_combo_crud_pais') }}',
+list_deprtamento:'{{ path('app_combo_list_crud_departamento') }}',
+crud_departamento:'{{ path('app_combo_crud_departamento') }}'
 };
 	</script>
 

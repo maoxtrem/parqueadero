@@ -16,30 +16,40 @@ class PaisRepository extends ServiceEntityRepository
         parent::__construct($registry, Pais::class);
     }
 
-    public function save(Pais $pais): void
+    public function save(Pais $entity,$flush = true): void
     {
-        $this->getEntityManager()->persist($pais);
-        $this->getEntityManager()->flush();
+        $this->getEntityManager()->persist($entity);
+        $flush && $this->getEntityManager()->flush();
     }
-    public function remove(Pais $pais): void
+
+    public function remove(Pais $entity,$flush = true): void
     {
-        $this->getEntityManager()->remove($pais);
-        $this->getEntityManager()->flush();
+        $this->getEntityManager()->remove($entity);
+        $flush && $this->getEntityManager()->flush();
+    }
+
+    public function active_or_inactive(Pais $entity,$flush = true): void
+    {
+        $entity->active();
+        $this->getEntityManager()->persist($entity);
+        $flush && $this->getEntityManager()->flush();
     }
 
 
-    public function findAll(): array
+    public function get_format_combo_select(): array
     {
         return  $this->createQueryBuilder('p')
             ->select('p.id,p.name')
+            ->andWhere('p.status = true')
             ->getQuery()
             ->getArrayResult();
     }
+
     public function list_crud(): array
     {
         return  $this->createQueryBuilder('p')
-            ->select('p.id,p.name name_nombre')
-            ->andWhere('p.delet = false')
+            ->select('p.id,p.name name_pais')
+            ->andWhere('p.status = true')
             ->getQuery()
             ->getArrayResult();
     }
