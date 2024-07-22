@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\ClassRequest\RequestDepartamento;
+use App\ClassRequest\RequestMunicipio;
 use App\ClassRequest\RequestPagination;
 use App\ClassRequest\RequestPais;
 use App\Entity\Departamento;
@@ -27,6 +28,7 @@ class RequestService
         private DepartamentoRepository $departamentoRepository,
         private PaisRepository $paisRepository,
         private RequestDepartamento $requestDepartamento,
+        private RequestMunicipio $requestMunicipio,
         private RequestPais $requestPais,
         private RequestPagination $requestPagination
     ) {
@@ -98,6 +100,15 @@ class RequestService
         return new Pais($id);
     }
 
+
+
+    public function getDepartamento(): Departamento
+    {
+        $id = $this->get('id') ?? 0;
+        return new Departamento($id);
+    }
+
+
     public function getPaisCrud(): RequestPais
     {
         $id = $this->get('id') ?? 0;
@@ -125,14 +136,20 @@ class RequestService
         return $this->requestDepartamento;
     }
 
-
-
-
-    public function getDepartamento(): Departamento
+   public function getMunicipioCrud(): RequestMunicipio
     {
         $id = $this->get('id') ?? 0;
-        return new Departamento($id);
+        $delete = $this->get('delete');
+        $id_departamento = $this->get('id_departamento');
+        $name = $this->get('name');
+
+        $this->requestMunicipio->setId($id);
+        $this->requestMunicipio->setDelete($delete);
+        $this->requestMunicipio->setIdDepartamento($id_departamento);
+        $this->requestMunicipio->setName($name);
+        return $this->requestMunicipio;
     }
+
 
 
     public function get(string $key): null|string|UploadedFile

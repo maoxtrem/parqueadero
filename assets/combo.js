@@ -93,17 +93,10 @@ on('hidden.bs.modal', modalDepartamento._element, (e) => {
   select('#departamento').value = '';
 })
 
-on('shown.bs.modal', modalDepartamento._element, async (e) => {
-  
-  //select('#id_departamento').value = 0;
-  //select('#departamento').value = '';
-})
-
 on('submit', '#form_departamento', async (e) => {
   e.preventDefault();
   let formData = new FormData(e.target);
   formData.append('delete', 0);
-  console.log(rutes.crud_departamento);
   await fetch_async_formData(rutes.crud_departamento, formData)
   $('#table_departamento').bootstrapTable('refresh')
   modalDepartamento.hide();
@@ -138,6 +131,76 @@ function btns_departamento() {
       },
       attributes: {
         title: 'nuevo Departamento',
+        class: 'btn-success'
+      }
+    }
+  };
+}
+
+/**
+ * crud combo municipios
+ */
+
+const encabezadoMunicipio = [
+  formatt_campo(),
+  formatt_campo({ type: 'text', name: 'municipio' }),
+  ...formatt_campo({ type: 'relation', name: 'departamento' }),
+  formatt_campo({ type: 'operate', name: '', events: { edit: editMunicipio, delet: deletMunicipio } })
+];
+const titleMunicipio = [{ align: "center", title: "Lista de: Municipio", colspan: encabezadoMunicipio.length }];
+
+$('#table_municipio').bootstrapTable({
+  ...configBootstrapTableDefault,
+  columns: [titleMunicipio, encabezadoMunicipio],
+  url: rutes.list_municipio,
+  buttons: btns_municipio
+})
+
+const modalMunicipio = new bootstrap.Modal('#modalMunicipio')
+
+on('hidden.bs.modal', modalMunicipio._element, (e) => {
+  select('#id_municipio').value = 0;
+  select('#municipio').value = '';
+})
+
+on('submit', '#form_municipio', async (e) => {
+  e.preventDefault();
+  let formData = new FormData(e.target);
+  formData.append('delete', 0);
+  await fetch_async_formData(rutes.crud_departamento, formData)
+  $('#table_municipio').bootstrapTable('refresh')
+  modalMunicipio.hide();
+})
+
+async function editMunicipio(row) {
+  select('#id_municipio').value = row.id;
+  select('#municipio').value = row.name_municipio;
+  await comboFetch(rutes.list_combo_departamentos, '#select_departamento', row.id_departamento)
+  modalMunicipio.show();
+}
+
+async function deletMunicipio(row) {
+  let formData = new FormData();
+  formData.append('delete', 1);
+  formData.append('id', row.id);
+  confirmar(action);
+  async function action() {
+    await fetch_async_formData(rutes.crud_municipio, formData);
+    $('#table_municipio').bootstrapTable('refresh');
+  }
+}
+
+function btns_municipio() {
+  return {
+    btnAdd: {
+      text: 'nuevo Municipio',
+      icon: 'bi bi-plus-square',
+      event: async () => {
+        await comboFetch(rutes.list_combo_departamentos, '#select_departamento', 0)
+        modalMunicipio.show();
+      },
+      attributes: {
+        title: 'nuevo Municipio',
         class: 'btn-success'
       }
     }

@@ -3,7 +3,6 @@
 namespace App\ClassRequest;
 
 use App\Entity\Departamento;
-use App\Entity\Pais;
 use App\Repository\PaisRepository;
 
 class RequestDepartamento extends RequestCRUD

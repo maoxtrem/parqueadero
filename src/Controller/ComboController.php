@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Services\ComboService;
 use App\Services\DepartamentoService;
+use App\Services\MunicipioService;
 use App\Services\PaisService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,6 +80,22 @@ class ComboController extends AbstractController
     {
         $departamento = $request->getDepartamentoCrud();
         $departamentoService->crud_departamento($departamento);
+        return new JsonResponse([]);
+    }
+
+
+    #[Route('/list_crud_municipio', name: 'list_crud_municipio')]
+    public function crud_list_municipio(MunicipioService $municipioService): JsonResponse
+    {
+        $municipio = $municipioService->get_list_crud_municipio();
+        return new JsonResponse($municipio);
+    }
+
+    #[Route('/crud_municipio', name: 'crud_municipio')]
+    public function crud_municipio(RequestService $request, MunicipioService $municipioService): JsonResponse
+    {
+        $municipio = $request->getMunicipioCrud();
+        $municipioService->crud_municipio($municipio);
         return new JsonResponse([]);
     }
 }
