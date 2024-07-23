@@ -31,6 +31,7 @@ on('submit', '#form_paises', async (e) => {
   await fetch_async_formData(rutes.crud_pais, formData)
   $('#table_paises').bootstrapTable('refresh')
   $('#table_departamento').bootstrapTable('refresh')
+  $('#table_municipio').bootstrapTable('refresh')
   modalPaises.hide();
 })
 function editPais(row) {
@@ -48,6 +49,7 @@ async function deletPais(row) {
     await fetch_async_formData(rutes.crud_pais, formData);
     $('#table_paises').bootstrapTable('refresh');
     $('#table_departamento').bootstrapTable('refresh')
+    $('#table_municipio').bootstrapTable('refresh')
   }
 }
 
@@ -99,6 +101,7 @@ on('submit', '#form_departamento', async (e) => {
   formData.append('delete', 0);
   await fetch_async_formData(rutes.crud_departamento, formData)
   $('#table_departamento').bootstrapTable('refresh')
+  $('#table_municipio').bootstrapTable('refresh');
   modalDepartamento.hide();
 })
 
@@ -117,6 +120,7 @@ async function deletDepartamento(row) {
   async function action() {
     await fetch_async_formData(rutes.crud_departamento, formData);
     $('#table_departamento').bootstrapTable('refresh');
+    $('#table_municipio').bootstrapTable('refresh');
   }
 }
 
@@ -145,6 +149,7 @@ const encabezadoMunicipio = [
   formatt_campo(),
   formatt_campo({ type: 'text', name: 'municipio' }),
   ...formatt_campo({ type: 'relation', name: 'departamento' }),
+  ...formatt_campo({ type: 'relation', name: 'pais' }),
   formatt_campo({ type: 'operate', name: '', events: { edit: editMunicipio, delet: deletMunicipio } })
 ];
 const titleMunicipio = [{ align: "center", title: "Lista de: Municipio", colspan: encabezadoMunicipio.length }];
@@ -175,7 +180,10 @@ on('submit', '#form_municipio', async (e) => {
 async function editMunicipio(row) {
   select('#id_municipio').value = row.id;
   select('#municipio').value = row.name_municipio;
-  await comboFetch(rutes.list_combo_departamentos, '#select_departamento', row.id_departamento)
+  await comboCascade([
+    { url: rutes.list_combo_paises, el: '#m_select_pais', defaultValue: row.id_pais },
+    { url: rutes.list_combo_departamentos, el: '#m_select_departamento', defaultValue: row.id_departamento }
+  ])
   modalMunicipio.show();
 }
 
@@ -196,7 +204,10 @@ function btns_municipio() {
       text: 'nuevo Municipio',
       icon: 'bi bi-plus-square',
       event: async () => {
-        await comboFetch(rutes.list_combo_departamentos, '#select_departamento', 0)
+        await comboCascade([
+          { url: rutes.list_combo_paises, el: '#m_select_pais', defaultValue: 0 },
+          { url: rutes.list_combo_departamentos, el: '#m_select_departamento', defaultValue: 0 }
+        ])
         modalMunicipio.show();
       },
       attributes: {
@@ -207,6 +218,8 @@ function btns_municipio() {
   };
 }
 
-on('DOMContentLoaded', document, (e) => {
+
+
+on('DOMContentLoaded', document,async (e) => {
 
 })

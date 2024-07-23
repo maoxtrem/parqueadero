@@ -3,8 +3,8 @@ import { configBootstrapTableDefault, formatt_campo,bootstrap, on} from "./util"
 
 
 const encabezado_paises = [
-    formatt_campo(),
     formatt_campo({ type: 'radio',name: '' }),
+    formatt_campo(),
     formatt_campo({ type: 'text', name: 'username' }),
     formatt_campo({ type: 'operate', name: '', events: { edit: edit, delet: delet } })
   ];

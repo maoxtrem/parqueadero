@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Entity\Departamento;
 use App\Entity\Pais;
 
-class ComboService
+class SelectService
 {
 
     public function __construct(

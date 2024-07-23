@@ -42,7 +42,7 @@ class UserRepository extends ServiceEntityRepository
         $search = $pag->getSearch();
 
         $builder =  $this->createQueryBuilder('u')
-            ->select('u.id,u.username');
+            ->select('u.id,u.username name_username');
 
         ($offset !== null && $limit !== null) && $builder->setFirstResult($offset)
             ->setMaxResults($limit);
@@ -69,14 +69,12 @@ class UserRepository extends ServiceEntityRepository
             ->getArrayResult();
     }
 
-    public function userAll(): array
+    public function countUsers(): int
     {
-        $builder =  $this->createQueryBuilder('u')
-            ->select('u.id');
-        return  $builder->getQuery()
-            ->getArrayResult();
+        $builder = $this->createQueryBuilder('u')
+            ->select('count(u.id)');
+        return (int) $builder->getQuery()->getSingleScalarResult();
     }
-
 
     protected function getUser(): ?UserInterface
     {

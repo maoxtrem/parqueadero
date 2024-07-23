@@ -65,4 +65,9 @@ class CustomAuthenticator extends AbstractAuthenticator
     {
         return new JsonResponse(['message' => 'Authentication Required'], Response::HTTP_UNAUTHORIZED);
     }
+
+
+
+
+    
 }

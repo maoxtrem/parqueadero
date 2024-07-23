@@ -85,7 +85,8 @@
 							<div class="mb-3">
 								<input type="hidden" name="id" id="id_municipio" value="0">
 								<input type="text" name="name" class="form-control form-control-sm mb-1" id="municipio" required placeholder="nombre del municipio">
-								<select id="select_departamento" name="id_departamento" class="form-control form-control-sm"></select>
+								<select id="m_select_pais" name="id_pais" class="form-control form-control-sm"></select>
+								<select id="m_select_departamento" name="id_departamento" class="form-control form-control-sm"></select>
 							</div>
 							<button type="submit" class="btn btn-sm btn-primary">Guardar</button>
 							<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -103,17 +104,18 @@
 	{{ encore_entry_script_tags('combo') }}
 	<script>
 		const rutes = {
-list_combo_paises:'{{ path('app_combo_paises') }}',
-list_combo_departamentos:'{{ path('app_combo_departamentos') }}',
+list_combo_paises:'{{ path('app_select_paises') }}',
+list_combo_departamentos:'{{ path('app_select_departamentos') }}',
+list_combo_municipios:'{{ path('app_select_municipios') }}',
 
-list_paises:'{{ path('app_combo_list_crud_pais') }}',
-crud_pais:'{{ path('app_combo_crud_pais') }}',
+list_paises:'{{ path('app_select_crud_list_paises') }}',
+crud_pais:'{{ path('app_select_crud_pais') }}',
 
-list_deprtamento:'{{ path('app_combo_list_crud_departamento') }}',
-crud_departamento:'{{ path('app_combo_crud_departamento') }}',
+list_deprtamento:'{{ path('app_select_crud_list_departamentos') }}',
+crud_departamento:'{{ path('app_select_crud_departamento') }}',
 
-list_municipio:'{{ path('app_combo_list_crud_municipio') }}',
-crud_municipio:'{{ path('app_combo_crud_municipio') }}'
+list_municipio:'{{ path('app_select_crud_list_municipios') }}',
+crud_municipio:'{{ path('app_select_crud_municipio') }}'
 };
 	</script>
 

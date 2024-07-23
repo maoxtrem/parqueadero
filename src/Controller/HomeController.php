@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\PaginationService;
 use App\Services\RequestService;
 use App\Services\UserService;
 
@@ -16,16 +17,15 @@ class HomeController extends AbstractController
     #[Route('home', name: 'index')]
     public function home(): Response
     {
- 
         return $this->render('home.html.twig');
     }
 
     #[Route('users', name: 'list_users')]
-    public function list(RequestService $requestService, UserService $userService): JsonResponse
+    public function list(RequestService $requestService, PaginationService $paginationService): JsonResponse
     {
         $pagination = $requestService->getPagination();
-        $users = $userService->listAsPagination($pagination);
-        return new JsonResponse($users);
+        $userPagination = $paginationService->getUserPagination($pagination);
+        return new JsonResponse($userPagination->getResult());
     }
 
 }

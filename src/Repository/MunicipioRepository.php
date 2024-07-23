@@ -48,10 +48,12 @@ class MunicipioRepository extends ServiceEntityRepository
   public function list_crud(): array
   {
       return  $this->createQueryBuilder('m')
-          ->select('m.id, m.name name_municipio, d.id id_departamento, d.name name_departamento')
+          ->select('m.id, m.name name_municipio, d.id id_departamento, d.name name_departamento,p.id id_pais, p.name name_pais')
           ->leftJoin('m.departamento', 'd')
+          ->leftJoin('d.pais', 'p')
           ->andWhere('m.status = true')
           ->andWhere('d.status = true')
+          ->andWhere('p.status = true')
           ->getQuery()
           ->getArrayResult();
   }
