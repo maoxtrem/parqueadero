@@ -172,7 +172,7 @@ on('submit', '#form_municipio', async (e) => {
   e.preventDefault();
   let formData = new FormData(e.target);
   formData.append('delete', 0);
-  await fetch_async_formData(rutes.crud_departamento, formData)
+  await fetch_async_formData(rutes.crud_municipio, formData)
   $('#table_municipio').bootstrapTable('refresh')
   modalMunicipio.hide();
 })
@@ -220,6 +220,6 @@ function btns_municipio() {
 
 
 
-on('DOMContentLoaded', document,async (e) => {
+on('DOMContentLoaded', document, async (e) => {
 
 })

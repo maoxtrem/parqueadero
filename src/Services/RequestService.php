@@ -141,11 +141,13 @@ class RequestService
         $id = $this->get('id') ?? 0;
         $delete = $this->get('delete');
         $id_departamento = $this->get('id_departamento');
+        $id_pais = $this->get('id_pais');
         $name = $this->get('name');
 
         $this->requestMunicipio->setId($id);
         $this->requestMunicipio->setDelete($delete);
         $this->requestMunicipio->setIdDepartamento($id_departamento);
+        $this->requestMunicipio->setIdPais($id_pais);
         $this->requestMunicipio->setName($name);
         return $this->requestMunicipio;
     }

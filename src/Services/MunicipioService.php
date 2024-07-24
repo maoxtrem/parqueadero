@@ -9,7 +9,10 @@ use App\Repository\MunicipioRepository;
 
 class MunicipioService
 {
-    public function __construct(private MunicipioRepository $repository)
+    public function __construct(
+        private MunicipioRepository $repository,
+        
+        )
     {
     }
 
@@ -39,7 +42,6 @@ class MunicipioService
                 }
                 return [];
             }
-
             $this->repository->save($requestMunicipio->getEntity());
 
             return [];

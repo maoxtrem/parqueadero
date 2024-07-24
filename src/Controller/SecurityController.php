@@ -26,9 +26,8 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: 'register', name: 'register')]
-    public function register(
-        CustomRegister $customRegister
-    ): Response {
+    public function register(CustomRegister $customRegister): Response
+    {
         return $customRegister->register();
     }
 

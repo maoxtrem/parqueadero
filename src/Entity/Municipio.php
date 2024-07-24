@@ -6,6 +6,7 @@ use App\Repository\MunicipioRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Trait\EntityTrait;
 #[ORM\Entity(repositoryClass: MunicipioRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Municipio
 {
     use EntityTrait;
