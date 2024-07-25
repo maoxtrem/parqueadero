@@ -76,13 +76,21 @@ export const confirmar = (action = () => { }) => {
  * Action delete and edit bootstrao-table 
  */
 
-export const operateEvents = (edit, delet) => {
+export const operateEvents = (edit = () => { }, delet = () => { }) => {
     return {
         'click .edit': async (e, value, row, index) => {
-           await edit(row);
+            await edit(row);
         },
-        'click .delete':async (e, value, row, index) => {
+        'click .delete': async (e, value, row, index) => {
             await delet(row);
+        }
+    }
+}
+
+export const statusEvents = (actionStatus = () => { }) => {
+    return {
+        'click .status': async (e, value, row, index) => {
+            actionStatus(value, row, index);
         }
     }
 }
@@ -100,6 +108,15 @@ export const operateFormatter = () => {
         '</a>'
     ].join('')
 }
+
+export const statusFormatter = (value, row, index) => {
+    return [
+        '<a class="status" href="javascript:void(0)">',
+        `<i class="bi bi-circle-fill text-${value ? 'success' : 'danger'}"></i>`,
+        '</a>'
+    ].join('')
+}
+
 /**
  * footer de bootstrao-table 
  */
@@ -110,7 +127,7 @@ export function footerPromedio(data) { return data.map(row => (+row[this.field])
 /**
  * formato de los campos de bootstrao-table 
  */
-export const formatt_campo = (data = { type: 'id', name: 'id', events: { edit: () => { }, delet: () => { } } }, total = false, debug = false) => {
+export const formatt_campo = (data = { type: 'id', name: 'id', events: { edit: () => { }, delet: () => { } , actionStatus: () => { } } }, total = false, debug = false) => {
     let campos = {}
     const { type, name } = data;
     const width = { width: "0.1", widthUnit: "rem" };
@@ -145,6 +162,18 @@ export const formatt_campo = (data = { type: 'id', name: 'id', events: { edit: (
                 clickToSelect: false,
                 formatter: operateFormatter,
                 events: operateEvents(edit, delet)
+            }
+        case 'status':
+            const { actionStatus} = data.events;
+            return {
+                title: 'STATUS',
+                field: 'status',
+                align: "center",
+                halign: "center",
+                ...width,
+                clickToSelect: false,
+                formatter: statusFormatter,
+                events: statusEvents(actionStatus)
             }
         case 'radio':
             return { field: "radio", radio: true }
@@ -264,3 +293,16 @@ export const multiCombos = async (combos) => {
     })
 
 };
+
+export const selectIsValid = (el) => {
+
+    const selectElement = select(el);
+    selectElement.setCustomValidity('');
+    if (selectElement.value == 0) {
+        selectElement.setCustomValidity('Completa este campo');
+        return true
+    } else {
+        selectElement.setCustomValidity('');
+        return false
+    }
+}

@@ -52,8 +52,9 @@ class ListService
 
     public function crud_municipios(): JsonResponse
     {
-        $municipio = $this->municipioService->get_list_crud_municipio();
-        return new JsonResponse($municipio);
+        $requestPagination = $this->request->getPagination();
+        $resultPagination = $this->municipioService->get_list_crud_municipio($requestPagination);
+        return new JsonResponse($resultPagination->getResult());
     }
 
 

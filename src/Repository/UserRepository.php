@@ -31,6 +31,19 @@ class UserRepository extends ServiceEntityRepository
         return $user;
     }
 
+    public function remove(User $entity, $flush = true): void
+    {
+        $this->getEntityManager()->remove($entity);
+        $flush && $this->getEntityManager()->flush();
+    }
+
+    public function active_or_inactive(User $entity, $flush = true): void
+    {
+        $entity->active();
+        $this->getEntityManager()->persist($entity);
+        $flush && $this->getEntityManager()->flush();
+    }
+
 
     public function listAsPagination(RequestPagination $pag): array
     {
@@ -42,7 +55,7 @@ class UserRepository extends ServiceEntityRepository
         $search = $pag->getSearch();
 
         $builder =  $this->createQueryBuilder('u')
-            ->select('u.id,u.username name_username');
+            ->select('u.id,u.username name_username,u.status');
 
         ($offset !== null && $limit !== null) && $builder->setFirstResult($offset)
             ->setMaxResults($limit);

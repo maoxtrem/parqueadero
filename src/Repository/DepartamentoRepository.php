@@ -40,6 +40,7 @@ class DepartamentoRepository extends ServiceEntityRepository
         return  $this->createQueryBuilder('d')
             ->select('d.id,d.name')
             ->andWhere('d.pais = :pais')
+            ->andWhere('d.status = true')
             ->setParameter('pais', $pais)
             ->getQuery()
             ->getArrayResult();

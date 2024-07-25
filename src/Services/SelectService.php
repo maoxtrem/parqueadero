@@ -35,7 +35,7 @@ class SelectService
 
     private function  unshift(array $array): array
     {
-        array_unshift($array, ['id' => 0, 'name' => 'selecionar un campo']);
+        array_unshift($array, ['id' => "", 'name' => 'selecionar un campo']);
         return $array;
     }
 }

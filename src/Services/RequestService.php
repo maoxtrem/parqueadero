@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use App\Security\CustomAuthenticator;
+use App\Security\CustomAuthenticatorLogin;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class RequestService
 {
@@ -24,7 +26,7 @@ class RequestService
     public function __construct(
         private RequestStack $requestStack,
         private UserAuthenticatorInterface $userAuthenticator,
-        private CustomAuthenticator $authenticator,
+        private CustomAuthenticatorLogin $authenticator,
         private DepartamentoRepository $departamentoRepository,
         private PaisRepository $paisRepository,
         private RequestDepartamento $requestDepartamento,

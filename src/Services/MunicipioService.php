@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\ClassRequest\RequestMunicipio;
+use App\ClassRequest\RequestPagination;
 use App\Entity\Departamento;
 use App\Entity\Municipio;
+use App\OtherClass\ResultPagination;
 use App\Repository\MunicipioRepository;
 
 class MunicipioService
@@ -21,9 +23,12 @@ class MunicipioService
         return $this->repository->get_format_combo_select($departamento);
     }
 
-    public function get_list_crud_municipio(): array
+    public function get_list_crud_municipio(RequestPagination $pagination): ResultPagination
     {
-        return  $this->repository->list_crud();
+        $resultPagination = new ResultPagination;
+        $resultPagination->setRow($this->repository->listAsPagination($pagination));
+        $resultPagination->setTotal( $this->repository->countUsers());
+        return $resultPagination;    
     }
 
 

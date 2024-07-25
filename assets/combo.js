@@ -1,4 +1,4 @@
-import { bootstrap, on, fetch_async_formData, confirmar, formatt_campo, configBootstrapTableDefault, select, combo, comboFetch, multiCombos, comboCascade } from "./util";
+import { bootstrap, on, fetch_async_formData, confirmar, formatt_campo, configBootstrapTableDefault, select,  comboFetch,  comboCascade, selectIsValid } from "./util";
 
 /**
  * crud combo paises
@@ -97,6 +97,9 @@ on('hidden.bs.modal', modalDepartamento._element, (e) => {
 
 on('submit', '#form_departamento', async (e) => {
   e.preventDefault();
+  if (selectIsValid('#select_pais')) {
+    return
+  }
   let formData = new FormData(e.target);
   formData.append('delete', 0);
   await fetch_async_formData(rutes.crud_departamento, formData)
@@ -157,6 +160,7 @@ const titleMunicipio = [{ align: "center", title: "Lista de: Municipio", colspan
 $('#table_municipio').bootstrapTable({
   ...configBootstrapTableDefault,
   columns: [titleMunicipio, encabezadoMunicipio],
+  sidePagination: "server",
   url: rutes.list_municipio,
   buttons: btns_municipio
 })
@@ -170,6 +174,7 @@ on('hidden.bs.modal', modalMunicipio._element, (e) => {
 
 on('submit', '#form_municipio', async (e) => {
   e.preventDefault();
+  const selectElement = document.querySelector('#m_select_pais');
   let formData = new FormData(e.target);
   formData.append('delete', 0);
   await fetch_async_formData(rutes.crud_municipio, formData)
