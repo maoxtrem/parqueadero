@@ -127,7 +127,7 @@ export function footerPromedio(data) { return data.map(row => (+row[this.field])
 /**
  * formato de los campos de bootstrao-table 
  */
-export const formatt_campo = (data = { type: 'id', name: 'id', events: { edit: () => { }, delet: () => { } , actionStatus: () => { } } }, total = false, debug = false) => {
+export const formatt_campo = (data = { type: 'id', name: 'id', events: { edit: () => { }, delet: () => { }, actionStatus: () => { } } }, total = false, debug = false) => {
     let campos = {}
     const { type, name } = data;
     const width = { width: "0.1", widthUnit: "rem" };
@@ -164,7 +164,7 @@ export const formatt_campo = (data = { type: 'id', name: 'id', events: { edit: (
                 events: operateEvents(edit, delet)
             }
         case 'status':
-            const { actionStatus} = data.events;
+            const { actionStatus } = data.events;
             return {
                 title: 'STATUS',
                 field: 'status',

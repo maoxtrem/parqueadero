@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\OtherClass\ResultPermices;
 use App\Security\CustomLogin;
 use App\Security\CustomRegister;
+use App\Services\PermisosService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -43,4 +45,6 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException();
     }
+
+
 }
