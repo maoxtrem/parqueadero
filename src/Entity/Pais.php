@@ -7,6 +7,7 @@ use App\Trait\EntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PaisRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Pais
 {
     use EntityTrait;
@@ -36,7 +37,7 @@ class Pais
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
 

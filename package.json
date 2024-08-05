@@ -16,6 +16,7 @@
     "private": true,
     "scripts": {
         "start": "symfony server:start",
+        "stop": "symfony server:stop",
         "db_update": "php bin/console d:s:u -f",
         "dev-server": "encore dev-server",
         "dev": "encore dev",

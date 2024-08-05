@@ -33,7 +33,7 @@ class CustomAuthenticator extends AbstractAuthenticator
     {
         $apiToken = $request->headers->get('X-AUTH-TOKEN');
         if (null === $apiToken) {
-            throw new CustomUserMessageAuthenticationException('No API token provided');
+            throw new CustomUserMessageAuthenticationException('No API token provided primer filtro');
         }
         $user = $this->userProvider->loadUserByIdentifier($apiToken);
 
@@ -65,4 +65,9 @@ class CustomAuthenticator extends AbstractAuthenticator
     {
         return new JsonResponse(['message' => 'Authentication Required'], Response::HTTP_UNAUTHORIZED);
     }
+
+
+
+
+    
 }

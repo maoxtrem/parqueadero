@@ -3,14 +3,19 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Trait\EntityTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use EntityTrait;
+   
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -31,6 +36,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $foto = null;
+
+    private ?UploadedFile $fotoFile = null;
+
+    public function __construct(
+        int $id = null
+    ) {
+        $this->id = $id;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -40,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->username;
     }
-  
+
     public function setUsername(?string $username): static
     {
         $this->username = $username;
@@ -106,8 +123,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-public function isValid() : bool {
-    return $this->username && $this->password;
-}
+    public function isValid(): bool
+    {
+        return $this->username && $this->password;
+    }
 
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+    #[ORM\PreUpdate]
+    #[ORM\PrePersist]
+    public function setFoto(): static
+    {
+        $file = $this->getFotoFile();
+        $this->foto = $file instanceof UploadedFile && uniqid() . '-' . uniqid() . '.' . $file->guessExtension();
+        return $this;
+    }
+
+    public function getFotoFile(): ?UploadedFile
+    {
+        return $this->fotoFile;
+    }
+
+    public function setFotoFile(?UploadedFile $file): static
+    {
+        $this->fotoFile = $file;
+
+        return $this;
+    }
 }
