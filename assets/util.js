@@ -231,7 +231,7 @@ export const configBootstrapTableDefault = {
  * combo dependiente
  */
 
-export const combo = async (options, el, defaultValue = 0) => {
+export const  combo = async (options, el, defaultValue = 0) => {
     const selectElement = select(el);
     if (!selectElement) {
         console.error(`Element with id ${el} not found.`);
